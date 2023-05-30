@@ -11,6 +11,7 @@
 		2C90756D2A2641FE006BE4CA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C90756C2A2641FE006BE4CA /* ContentView.swift */; };
 		2C90756F2A2641FF006BE4CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C90756E2A2641FF006BE4CA /* Assets.xcassets */; };
 		2C9075722A2641FF006BE4CA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C9075712A2641FF006BE4CA /* Preview Assets.xcassets */; };
+		2C9075842A264F53006BE4CA /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9075832A264F53006BE4CA /* Theme.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,7 @@
 		2C90756C2A2641FE006BE4CA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2C90756E2A2641FF006BE4CA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2C9075712A2641FF006BE4CA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		2C9075832A264F53006BE4CA /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,9 +53,9 @@
 		2C9075692A2641FE006BE4CA /* ADACatur */ = {
 			isa = PBXGroup;
 			children = (
-				2C90756A2A2641FE006BE4CA /* ADACaturApp.swift */,
-				2C90756C2A2641FE006BE4CA /* ContentView.swift */,
-				2C90756E2A2641FF006BE4CA /* Assets.xcassets */,
+				2C9075782A264D8A006BE4CA /* Application */,
+				2C90757A2A264E00006BE4CA /* Core */,
+				2C9075792A264D97006BE4CA /* Features */,
 				2C9075702A2641FF006BE4CA /* Preview Content */,
 			);
 			path = ADACatur;
@@ -65,6 +67,95 @@
 				2C9075712A2641FF006BE4CA /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		2C9075782A264D8A006BE4CA /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				2C90756A2A2641FE006BE4CA /* ADACaturApp.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		2C9075792A264D97006BE4CA /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				2C90757C2A264E21006BE4CA /* Models */,
+				2C90757D2A264E2A006BE4CA /* ViewModels */,
+				2C90757E2A264E41006BE4CA /* Presenters */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		2C90757A2A264E00006BE4CA /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				2C9075832A264F53006BE4CA /* Theme.swift */,
+				2C9075822A264F44006BE4CA /* Constants */,
+				2C9075812A264E78006BE4CA /* Resources */,
+				2C90757B2A264E0E006BE4CA /* Utilities */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		2C90757B2A264E0E006BE4CA /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		2C90757C2A264E21006BE4CA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		2C90757D2A264E2A006BE4CA /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		2C90757E2A264E41006BE4CA /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+				2C9075802A264E56006BE4CA /* Views */,
+				2C90757F2A264E4C006BE4CA /* Components */,
+			);
+			path = Presenters;
+			sourceTree = "<group>";
+		};
+		2C90757F2A264E4C006BE4CA /* Components */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		2C9075802A264E56006BE4CA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2C90756C2A2641FE006BE4CA /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2C9075812A264E78006BE4CA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2C90756E2A2641FF006BE4CA /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		2C9075822A264F44006BE4CA /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,6 +228,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C9075842A264F53006BE4CA /* Theme.swift in Sources */,
 				2C90756D2A2641FE006BE4CA /* ContentView.swift in Sources */,
 				2C90756B2A2641FE006BE4CA /* ADACaturApp.swift in Sources */,
 			);
