@@ -12,6 +12,11 @@
 		2C90756F2A2641FF006BE4CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C90756E2A2641FF006BE4CA /* Assets.xcassets */; };
 		2C9075722A2641FF006BE4CA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C9075712A2641FF006BE4CA /* Preview Assets.xcassets */; };
 		2C9075842A264F53006BE4CA /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9075832A264F53006BE4CA /* Theme.swift */; };
+		2C9075862A265085006BE4CA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9075852A265085006BE4CA /* Constants.swift */; };
+		2C9075882A2650E1006BE4CA /* ExampleReusableCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9075872A2650E1006BE4CA /* ExampleReusableCode.swift */; };
+		2CE3AEEE2A2651380022580D /* ExampleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE3AEED2A2651380022580D /* ExampleModel.swift */; };
+		2CE3AEF02A2651650022580D /* ExampleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE3AEEF2A2651650022580D /* ExampleViewModel.swift */; };
+		2CE3AEF22A2651790022580D /* ExampleUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE3AEF12A2651790022580D /* ExampleUtilities.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +26,11 @@
 		2C90756E2A2641FF006BE4CA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2C9075712A2641FF006BE4CA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2C9075832A264F53006BE4CA /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		2C9075852A265085006BE4CA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		2C9075872A2650E1006BE4CA /* ExampleReusableCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleReusableCode.swift; sourceTree = "<group>"; };
+		2CE3AEED2A2651380022580D /* ExampleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleModel.swift; sourceTree = "<group>"; };
+		2CE3AEEF2A2651650022580D /* ExampleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViewModel.swift; sourceTree = "<group>"; };
+		2CE3AEF12A2651790022580D /* ExampleUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleUtilities.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +111,7 @@
 		2C90757B2A264E0E006BE4CA /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				2CE3AEF12A2651790022580D /* ExampleUtilities.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -108,6 +119,7 @@
 		2C90757C2A264E21006BE4CA /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				2CE3AEED2A2651380022580D /* ExampleModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -115,6 +127,7 @@
 		2C90757D2A264E2A006BE4CA /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				2CE3AEEF2A2651650022580D /* ExampleViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -131,6 +144,7 @@
 		2C90757F2A264E4C006BE4CA /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				2C9075872A2650E1006BE4CA /* ExampleReusableCode.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -154,6 +168,7 @@
 		2C9075822A264F44006BE4CA /* Constants */ = {
 			isa = PBXGroup;
 			children = (
+				2C9075852A265085006BE4CA /* Constants.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -229,8 +244,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C9075842A264F53006BE4CA /* Theme.swift in Sources */,
+				2CE3AEF22A2651790022580D /* ExampleUtilities.swift in Sources */,
 				2C90756D2A2641FE006BE4CA /* ContentView.swift in Sources */,
+				2CE3AEEE2A2651380022580D /* ExampleModel.swift in Sources */,
+				2C9075882A2650E1006BE4CA /* ExampleReusableCode.swift in Sources */,
 				2C90756B2A2641FE006BE4CA /* ADACaturApp.swift in Sources */,
+				2CE3AEF02A2651650022580D /* ExampleViewModel.swift in Sources */,
+				2C9075862A265085006BE4CA /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
