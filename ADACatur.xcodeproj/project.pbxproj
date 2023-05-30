@@ -17,6 +17,9 @@
 		2CE3AEEE2A2651380022580D /* ExampleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE3AEED2A2651380022580D /* ExampleModel.swift */; };
 		2CE3AEF02A2651650022580D /* ExampleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE3AEEF2A2651650022580D /* ExampleViewModel.swift */; };
 		2CE3AEF22A2651790022580D /* ExampleUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE3AEF12A2651790022580D /* ExampleUtilities.swift */; };
+		B1A18B1F2A2659E20099C5EF /* EloView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A18B1E2A2659E20099C5EF /* EloView.swift */; };
+		B1A18B212A265A8C0099C5EF /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A18B202A265A8C0099C5EF /* LoginScreen.swift */; };
+		B1A18B252A265D1C0099C5EF /* AppleLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A18B242A265D1C0099C5EF /* AppleLoginButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +34,9 @@
 		2CE3AEED2A2651380022580D /* ExampleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleModel.swift; sourceTree = "<group>"; };
 		2CE3AEEF2A2651650022580D /* ExampleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViewModel.swift; sourceTree = "<group>"; };
 		2CE3AEF12A2651790022580D /* ExampleUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleUtilities.swift; sourceTree = "<group>"; };
+		B1A18B1E2A2659E20099C5EF /* EloView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EloView.swift; sourceTree = "<group>"; };
+		B1A18B202A265A8C0099C5EF /* LoginScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
+		B1A18B242A265D1C0099C5EF /* AppleLoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				2C9075872A2650E1006BE4CA /* ExampleReusableCode.swift */,
+				B1A18B242A265D1C0099C5EF /* AppleLoginButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -153,6 +160,8 @@
 			isa = PBXGroup;
 			children = (
 				2C90756C2A2641FE006BE4CA /* ContentView.swift */,
+				B1A18B1E2A2659E20099C5EF /* EloView.swift */,
+				B1A18B202A265A8C0099C5EF /* LoginScreen.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -245,12 +254,15 @@
 			files = (
 				2C9075842A264F53006BE4CA /* Theme.swift in Sources */,
 				2CE3AEF22A2651790022580D /* ExampleUtilities.swift in Sources */,
+				B1A18B252A265D1C0099C5EF /* AppleLoginButton.swift in Sources */,
 				2C90756D2A2641FE006BE4CA /* ContentView.swift in Sources */,
 				2CE3AEEE2A2651380022580D /* ExampleModel.swift in Sources */,
 				2C9075882A2650E1006BE4CA /* ExampleReusableCode.swift in Sources */,
+				B1A18B1F2A2659E20099C5EF /* EloView.swift in Sources */,
 				2C90756B2A2641FE006BE4CA /* ADACaturApp.swift in Sources */,
 				2CE3AEF02A2651650022580D /* ExampleViewModel.swift in Sources */,
 				2C9075862A265085006BE4CA /* Constants.swift in Sources */,
+				B1A18B212A265A8C0099C5EF /* LoginScreen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
