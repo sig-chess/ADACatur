@@ -14,6 +14,15 @@ struct CalculateElo: View {
     var scorePlayerA = 1.0 // 1 = win, 0.5 draw, 0 lose
     @State var playerANewRating = 0
     @State var playerBNewRating  = 0
+    @State var playerAWinProbability: Double = 0
+    @State var playerBWinProbability: Double  = 0
+    
+    func calculateWinningProbability(playerARating: Double, playerBRating: Double) -> (playerAWinProbability: Double, playerBWinProbability: Double) {
+        let expectedScoreA = 1 / (1 + pow(10, (playerBRating - playerARating) / 400))
+        let expectedScoreB = 1 - expectedScoreA
+        
+        return (expectedScoreA, expectedScoreB)
+    }
     
     func calculateEloChange(playerARating: Double, playerBRating: Double, playerAScore: Double, kFactor: Double) -> (playerANewRating: Int, playerBNewRating: Int) {
         let expectedScoreA = 1 / (1 + pow(10, (playerBRating - playerARating) / 400))
@@ -32,10 +41,14 @@ struct CalculateElo: View {
         VStack{
             Text("Player A rating : \(playerARating)")
             Text("Player B rating : \(playerBRating)")
+            Text("Player A's winning probability: \(playerAWinProbability)")
+            Text("Player B's winning probability: \(playerBWinProbability)")
             Text("Player A rating now : \(playerANewRating)")
             Text("Player B rating now : \(playerBNewRating)")
+            
         }
         .onAppear(){
+            (playerAWinProbability, playerBWinProbability) = calculateWinningProbability(playerARating: Double(playerARating), playerBRating: Double(playerBRating))
             (playerANewRating, playerBNewRating) = calculateEloChange(playerARating: Double(playerARating), playerBRating: Double(playerBRating), playerAScore: Double(scorePlayerA), kFactor: Double(kFactor))
         }
     }
