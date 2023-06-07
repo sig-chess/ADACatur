@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CalculateElo: View {
     var playerARating = 800
-    var playerBRating = 1000
+    var playerBRating = 900
     var kFactor = 32
     var scorePlayerA = 1.0 // 1 = win, 0.5 draw, 0 lose
     @State var playerANewRating = 0
