@@ -45,6 +45,7 @@ struct MatchRow: View {
                 Spacer()
                 
                 Text(convertDateFormat(playerMatch.match.startedAt))
+                    .font(.caption)
             }
             
             HStack {
@@ -59,7 +60,7 @@ struct MatchRow: View {
                 HStack {
                     Spacer()
                     
-                    Text("\(playerMatch.result.rawValue)")
+                    Text("\(playerMatch.result.rawValue.capitalized)")
                         .foregroundColor(colorResult(playerMatch.result))
                     
                     Text("(\(formatElo(eloChange: playerMatch.eloChange, result: playerMatch.result)))")
