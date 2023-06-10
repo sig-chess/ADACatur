@@ -11,7 +11,11 @@ import SwiftUI
 struct ADACaturApp: App {
     var body: some Scene {
         WindowGroup {
-            LoginScreen()
+            // uncomment later
+            // LoginScreen()
+            
+            // redirect to homeview when opening app (for development purpose)
+            HomeView()
         }
     }
 }
