@@ -69,7 +69,7 @@ struct HomeView: View {
                 MatchHistoryView(playerMatches: playerMatches)
             }
         }
-        .navigationTitle(Text("Hi \("Ivan")"))
+        .navigationTitle(Text("Hi \("Ivan")!"))
         .navigationBarItems(trailing: HStack {
             //button 1
             Button(action: {
