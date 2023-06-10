@@ -11,8 +11,18 @@ struct LeaderboardView: View {
     public var players: [Player]
     
     var body: some View {
-        List(players) { player in
-            PlayerRow(player: player)
+        if players.isEmpty {
+            VStack {
+                Spacer()
+                
+                Text("No player")
+                
+                Spacer()
+            }
+        } else {
+            List(players) { player in
+                PlayerRow(player: player)
+            }
         }
     }
 }
