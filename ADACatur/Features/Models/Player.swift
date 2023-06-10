@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Player {
+struct Player: Identifiable {
     var id: UUID = UUID()
     let name: String
     let email: String
