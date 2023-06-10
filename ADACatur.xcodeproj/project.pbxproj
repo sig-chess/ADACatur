@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2C0B05782A349D5E00A75D30 /* PlayerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B05772A349D5E00A75D30 /* PlayerRow.swift */; };
 		2C0B057A2A349D7A00A75D30 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B05792A349D7A00A75D30 /* Player.swift */; };
+		2C0B057E2A34A04900A75D30 /* LeaderboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B057D2A34A04900A75D30 /* LeaderboardView.swift */; };
 		2C90756B2A2641FE006BE4CA /* ADACaturApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C90756A2A2641FE006BE4CA /* ADACaturApp.swift */; };
 		2C90756D2A2641FE006BE4CA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C90756C2A2641FE006BE4CA /* ContentView.swift */; };
 		2C90756F2A2641FF006BE4CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C90756E2A2641FF006BE4CA /* Assets.xcassets */; };
@@ -27,6 +28,7 @@
 /* Begin PBXFileReference section */
 		2C0B05772A349D5E00A75D30 /* PlayerRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerRow.swift; sourceTree = "<group>"; };
 		2C0B05792A349D7A00A75D30 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		2C0B057D2A34A04900A75D30 /* LeaderboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardView.swift; sourceTree = "<group>"; };
 		2C9075672A2641FE006BE4CA /* ADACatur.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ADACatur.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C90756A2A2641FE006BE4CA /* ADACaturApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ADACaturApp.swift; sourceTree = "<group>"; };
 		2C90756C2A2641FE006BE4CA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 				2C90756C2A2641FE006BE4CA /* ContentView.swift */,
 				B1A18B1E2A2659E20099C5EF /* EloView.swift */,
 				B1A18B202A265A8C0099C5EF /* LoginScreen.swift */,
+				2C0B057D2A34A04900A75D30 /* LeaderboardView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -268,6 +271,7 @@
 				B1A18B1F2A2659E20099C5EF /* EloView.swift in Sources */,
 				2C90756B2A2641FE006BE4CA /* ADACaturApp.swift in Sources */,
 				2CE3AEF02A2651650022580D /* ExampleViewModel.swift in Sources */,
+				2C0B057E2A34A04900A75D30 /* LeaderboardView.swift in Sources */,
 				2C0B05782A349D5E00A75D30 /* PlayerRow.swift in Sources */,
 				2C9075862A265085006BE4CA /* Constants.swift in Sources */,
 				B1A18B212A265A8C0099C5EF /* LoginScreen.swift in Sources */,
