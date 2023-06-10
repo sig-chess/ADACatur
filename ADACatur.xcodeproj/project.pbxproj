@@ -16,6 +16,7 @@
 		2C0B058C2A34B32000A75D30 /* MatchHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B058B2A34B32000A75D30 /* MatchHistoryView.swift */; };
 		2C0B058E2A34B8CD00A75D30 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B058D2A34B8CD00A75D30 /* HomeView.swift */; };
 		2C0B05902A34BB4700A75D30 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B058F2A34BB4700A75D30 /* ContentView.swift */; };
+		2C0B05932A34CA6100A75D30 /* PlayerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B05922A34CA6100A75D30 /* PlayerRepository.swift */; };
 		2C90756B2A2641FE006BE4CA /* ADACaturApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C90756A2A2641FE006BE4CA /* ADACaturApp.swift */; };
 		2C90756F2A2641FF006BE4CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C90756E2A2641FF006BE4CA /* Assets.xcassets */; };
 		2C9075722A2641FF006BE4CA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C9075712A2641FF006BE4CA /* Preview Assets.xcassets */; };
@@ -40,6 +41,8 @@
 		2C0B058B2A34B32000A75D30 /* MatchHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchHistoryView.swift; sourceTree = "<group>"; };
 		2C0B058D2A34B8CD00A75D30 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		2C0B058F2A34BB4700A75D30 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		2C0B05912A34C17100A75D30 /* ADACatur.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ADACatur.entitlements; sourceTree = "<group>"; };
+		2C0B05922A34CA6100A75D30 /* PlayerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerRepository.swift; sourceTree = "<group>"; };
 		2C9075672A2641FE006BE4CA /* ADACatur.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ADACatur.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C90756A2A2641FE006BE4CA /* ADACaturApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ADACaturApp.swift; sourceTree = "<group>"; };
 		2C90756E2A2641FF006BE4CA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -85,6 +88,7 @@
 		2C9075692A2641FE006BE4CA /* ADACatur */ = {
 			isa = PBXGroup;
 			children = (
+				2C0B05912A34C17100A75D30 /* ADACatur.entitlements */,
 				2C9075782A264D8A006BE4CA /* Application */,
 				2C90757A2A264E00006BE4CA /* Core */,
 				2C9075792A264D97006BE4CA /* Features */,
@@ -153,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				2CE3AEEF2A2651650022580D /* ExampleViewModel.swift */,
+				2C0B05922A34CA6100A75D30 /* PlayerRepository.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -277,6 +282,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C9075842A264F53006BE4CA /* Theme.swift in Sources */,
+				2C0B05932A34CA6100A75D30 /* PlayerRepository.swift in Sources */,
 				2C0B05862A34A50A00A75D30 /* PlayerMatch.swift in Sources */,
 				2CE3AEF22A2651790022580D /* ExampleUtilities.swift in Sources */,
 				2C0B058C2A34B32000A75D30 /* MatchHistoryView.swift in Sources */,
@@ -420,9 +426,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ADACatur/ADACatur.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ADACatur/Preview Content\"";
+				DEVELOPMENT_TEAM = 63Z24W5HZV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "ADA Catur";
@@ -437,7 +445,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "apple-developer-academy-sig-chess.ADACatur";
+				PRODUCT_BUNDLE_IDENTIFIER = "apple-developer-academy-sig-chess.adacatur.v1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -450,9 +458,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ADACatur/ADACatur.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ADACatur/Preview Content\"";
+				DEVELOPMENT_TEAM = 63Z24W5HZV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "ADA Catur";
@@ -467,7 +477,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "apple-developer-academy-sig-chess.ADACatur";
+				PRODUCT_BUNDLE_IDENTIFIER = "apple-developer-academy-sig-chess.adacatur.v1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
