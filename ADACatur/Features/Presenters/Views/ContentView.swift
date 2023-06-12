@@ -2,20 +2,16 @@
 //  ContentView.swift
 //  ADACatur
 //
-//  Created by Ivan on 30/05/23.
+//  Created by Ivan on 10/06/23.
 //
 
 import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        NavigationView {
+            LoginScreen()
         }
-        .padding()
     }
 }
 

@@ -9,6 +9,11 @@ import SwiftUI
 import AuthenticationServices
 
 struct AppleLoginButton: View {
+    @Environment(\.colorScheme) var colorScheme
+    @Environment(\.cloudKitContainer) var cloudKitContainer
+    
+    @Binding public var isLogin: Bool
+    
     var body: some View {
         SignInWithAppleButton(
             onRequest: { request in
@@ -19,10 +24,33 @@ struct AppleLoginButton: View {
             onCompletion: { result in
                 // Handle the result of the sign-in process
                 switch result {
-                case .success(_):
+                case .success(let auth):
+                    print(result)
+
                     // User signed in successfully with Apple ID
                     // Handle the user data from `authResult.credential`
+                    switch auth.credential {
+                    case let appleIdCredentials as ASAuthorizationAppleIDCredential:
+                        if let container = cloudKitContainer {
+                            let playerRepository = PlayerRepository(container: container)
+                            
+                            Task {
+                                try await playerRepository.createPlayerViaAppleID(
+                                        credentials: appleIdCredentials
+                                    )
+                                
+                                print("saved new user")
+                                isLogin = true
+                            }
+                        } else {
+                            print("Missing cloud kit container")
+                        }
+                    default:
+                        print(auth.credential)
+                    }
+
                     break
+
                 case .failure(_):
                     // An error occurred during sign-in
                     // Handle the error
@@ -30,11 +58,15 @@ struct AppleLoginButton: View {
                 }
             }
         )
+        .signInWithAppleButtonStyle(
+            colorScheme == .dark ? .white : .black
+        )
     }
 }
 
 struct AppleLoginButton_Previews: PreviewProvider {
     static var previews: some View {
-        AppleLoginButton()
+        AppleLoginButton(isLogin: .constant(false))
+            .environment(\.colorScheme, .dark)
     }
 }

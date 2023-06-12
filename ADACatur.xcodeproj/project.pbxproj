@@ -7,8 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C0B05782A349D5E00A75D30 /* PlayerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B05772A349D5E00A75D30 /* PlayerRow.swift */; };
+		2C0B057A2A349D7A00A75D30 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B05792A349D7A00A75D30 /* Player.swift */; };
+		2C0B057E2A34A04900A75D30 /* LeaderboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B057D2A34A04900A75D30 /* LeaderboardView.swift */; };
+		2C0B05802A34A40D00A75D30 /* MatchRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B057F2A34A40D00A75D30 /* MatchRow.swift */; };
+		2C0B05842A34A4BD00A75D30 /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B05832A34A4BD00A75D30 /* Match.swift */; };
+		2C0B05862A34A50A00A75D30 /* PlayerMatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B05852A34A50A00A75D30 /* PlayerMatch.swift */; };
+		2C0B058C2A34B32000A75D30 /* MatchHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B058B2A34B32000A75D30 /* MatchHistoryView.swift */; };
+		2C0B058E2A34B8CD00A75D30 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B058D2A34B8CD00A75D30 /* HomeView.swift */; };
+		2C0B05902A34BB4700A75D30 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B058F2A34BB4700A75D30 /* ContentView.swift */; };
+		2C0B05932A34CA6100A75D30 /* PlayerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B05922A34CA6100A75D30 /* PlayerRepository.swift */; };
 		2C90756B2A2641FE006BE4CA /* ADACaturApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C90756A2A2641FE006BE4CA /* ADACaturApp.swift */; };
-		2C90756D2A2641FE006BE4CA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C90756C2A2641FE006BE4CA /* ContentView.swift */; };
 		2C90756F2A2641FF006BE4CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C90756E2A2641FF006BE4CA /* Assets.xcassets */; };
 		2C9075722A2641FF006BE4CA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C9075712A2641FF006BE4CA /* Preview Assets.xcassets */; };
 		2C9075842A264F53006BE4CA /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9075832A264F53006BE4CA /* Theme.swift */; };
@@ -23,9 +32,19 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2C0B05772A349D5E00A75D30 /* PlayerRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerRow.swift; sourceTree = "<group>"; };
+		2C0B05792A349D7A00A75D30 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		2C0B057D2A34A04900A75D30 /* LeaderboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardView.swift; sourceTree = "<group>"; };
+		2C0B057F2A34A40D00A75D30 /* MatchRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchRow.swift; sourceTree = "<group>"; };
+		2C0B05832A34A4BD00A75D30 /* Match.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
+		2C0B05852A34A50A00A75D30 /* PlayerMatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerMatch.swift; sourceTree = "<group>"; };
+		2C0B058B2A34B32000A75D30 /* MatchHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchHistoryView.swift; sourceTree = "<group>"; };
+		2C0B058D2A34B8CD00A75D30 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		2C0B058F2A34BB4700A75D30 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		2C0B05912A34C17100A75D30 /* ADACatur.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ADACatur.entitlements; sourceTree = "<group>"; };
+		2C0B05922A34CA6100A75D30 /* PlayerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerRepository.swift; sourceTree = "<group>"; };
 		2C9075672A2641FE006BE4CA /* ADACatur.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ADACatur.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C90756A2A2641FE006BE4CA /* ADACaturApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ADACaturApp.swift; sourceTree = "<group>"; };
-		2C90756C2A2641FE006BE4CA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2C90756E2A2641FF006BE4CA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2C9075712A2641FF006BE4CA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2C9075832A264F53006BE4CA /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
@@ -69,6 +88,7 @@
 		2C9075692A2641FE006BE4CA /* ADACatur */ = {
 			isa = PBXGroup;
 			children = (
+				2C0B05912A34C17100A75D30 /* ADACatur.entitlements */,
 				2C9075782A264D8A006BE4CA /* Application */,
 				2C90757A2A264E00006BE4CA /* Core */,
 				2C9075792A264D97006BE4CA /* Features */,
@@ -126,6 +146,9 @@
 			isa = PBXGroup;
 			children = (
 				2CE3AEED2A2651380022580D /* ExampleModel.swift */,
+				2C0B05792A349D7A00A75D30 /* Player.swift */,
+				2C0B05832A34A4BD00A75D30 /* Match.swift */,
+				2C0B05852A34A50A00A75D30 /* PlayerMatch.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -134,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				2CE3AEEF2A2651650022580D /* ExampleViewModel.swift */,
+				2C0B05922A34CA6100A75D30 /* PlayerRepository.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -152,6 +176,8 @@
 			children = (
 				2C9075872A2650E1006BE4CA /* ExampleReusableCode.swift */,
 				B1A18B242A265D1C0099C5EF /* AppleLoginButton.swift */,
+				2C0B05772A349D5E00A75D30 /* PlayerRow.swift */,
+				2C0B057F2A34A40D00A75D30 /* MatchRow.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -159,9 +185,12 @@
 		2C9075802A264E56006BE4CA /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				2C90756C2A2641FE006BE4CA /* ContentView.swift */,
 				B1A18B1E2A2659E20099C5EF /* EloView.swift */,
 				B1A18B202A265A8C0099C5EF /* LoginScreen.swift */,
+				2C0B057D2A34A04900A75D30 /* LeaderboardView.swift */,
+				2C0B058B2A34B32000A75D30 /* MatchHistoryView.swift */,
+				2C0B058D2A34B8CD00A75D30 /* HomeView.swift */,
+				2C0B058F2A34BB4700A75D30 /* ContentView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -253,14 +282,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C9075842A264F53006BE4CA /* Theme.swift in Sources */,
+				2C0B05932A34CA6100A75D30 /* PlayerRepository.swift in Sources */,
+				2C0B05862A34A50A00A75D30 /* PlayerMatch.swift in Sources */,
 				2CE3AEF22A2651790022580D /* ExampleUtilities.swift in Sources */,
+				2C0B058C2A34B32000A75D30 /* MatchHistoryView.swift in Sources */,
 				B1A18B252A265D1C0099C5EF /* AppleLoginButton.swift in Sources */,
-				2C90756D2A2641FE006BE4CA /* ContentView.swift in Sources */,
+				2C0B05842A34A4BD00A75D30 /* Match.swift in Sources */,
 				2CE3AEEE2A2651380022580D /* ExampleModel.swift in Sources */,
+				2C0B05802A34A40D00A75D30 /* MatchRow.swift in Sources */,
+				2C0B05902A34BB4700A75D30 /* ContentView.swift in Sources */,
+				2C0B057A2A349D7A00A75D30 /* Player.swift in Sources */,
+				2C0B058E2A34B8CD00A75D30 /* HomeView.swift in Sources */,
 				2C9075882A2650E1006BE4CA /* ExampleReusableCode.swift in Sources */,
 				B1A18B1F2A2659E20099C5EF /* EloView.swift in Sources */,
 				2C90756B2A2641FE006BE4CA /* ADACaturApp.swift in Sources */,
 				2CE3AEF02A2651650022580D /* ExampleViewModel.swift in Sources */,
+				2C0B057E2A34A04900A75D30 /* LeaderboardView.swift in Sources */,
+				2C0B05782A349D5E00A75D30 /* PlayerRow.swift in Sources */,
 				2C9075862A265085006BE4CA /* Constants.swift in Sources */,
 				B1A18B212A265A8C0099C5EF /* LoginScreen.swift in Sources */,
 			);
@@ -388,9 +426,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ADACatur/ADACatur.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ADACatur/Preview Content\"";
+				DEVELOPMENT_TEAM = 63Z24W5HZV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "ADA Catur";
@@ -405,7 +445,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "apple-developer-academy-sig-chess.ADACatur";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ada.sig-chess.adacatur";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -418,9 +458,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ADACatur/ADACatur.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ADACatur/Preview Content\"";
+				DEVELOPMENT_TEAM = 63Z24W5HZV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "ADA Catur";
@@ -435,7 +477,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "apple-developer-academy-sig-chess.ADACatur";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ada.sig-chess.adacatur";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
