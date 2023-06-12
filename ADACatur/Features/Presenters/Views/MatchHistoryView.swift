@@ -30,8 +30,7 @@ struct MatchHistoryView: View {
 struct MatchHistoryView_Previews: PreviewProvider {
     static var opponent = Player(
         name: "John Lewis",
-        email: "john@gmail.com",
-        eloScore: 85.5
+        email: "john@gmail.com"
     )
     
     static var playerMatches: [PlayerMatch] = [

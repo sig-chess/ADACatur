@@ -6,16 +6,27 @@
 //
 
 import SwiftUI
+import CloudKit
+
+struct CloudKitContainerKey: EnvironmentKey {
+    static let defaultValue: CKContainer? = nil
+}
+
+extension EnvironmentValues {
+    var cloudKitContainer: CKContainer? {
+        get { self[CloudKitContainerKey.self] }
+        set { self[CloudKitContainerKey.self] = newValue }
+    }
+}
 
 @main
 struct ADACaturApp: App {
+    let container = CKContainer.init(identifier: containerName)
+    
     var body: some Scene {
         WindowGroup {
-            // uncomment later
-            // LoginScreen()
-            
-            // redirect to homeview when opening app (for development purpose)
-            HomeView()
+            ContentView()
+                .environment(\.cloudKitContainer, container)
         }
     }
 }

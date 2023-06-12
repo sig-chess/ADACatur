@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct LoginScreen: View {
+    @State private var isLogin: Bool = false
+    
     var body: some View {
         ZStack{
             Image("wp-login")
@@ -17,8 +19,12 @@ struct LoginScreen: View {
                 .opacity(0.8)
             VStack{
                 Spacer()
-                AppleLoginButton()
+                AppleLoginButton(isLogin: $isLogin)
                     .frame(width: 345,height: 44)
+            }
+            
+            NavigationLink(destination: HomeView(), isActive: $isLogin) {
+                EmptyView()
             }
         }
     }

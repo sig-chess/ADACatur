@@ -20,7 +20,7 @@ struct LeaderboardView: View {
                 Spacer()
             }
         } else {
-            List(players) { player in
+            List(players, id: \.self.recordId) { player in
                 PlayerRow(player: player)
             }
         }

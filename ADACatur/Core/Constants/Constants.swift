@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+let containerName = "iCloud.com.ada.sig-chess.adacatur"
+
+enum RecordType: String {
+    case player = "Player"
+}
