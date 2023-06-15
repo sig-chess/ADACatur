@@ -82,7 +82,7 @@ struct HomeView: View {
                 showSheet.toggle()
             }) {
                 Image(systemName: "plus")
-                .frame(width: 20, height: 20)
+                    .frame(width: 20, height: 20)
             }
         })
         .sheet(isPresented: $showSheet) {
@@ -98,24 +98,24 @@ struct HomeView: View {
                         playerRepository.player.email = fetchedRecord["email"] as! String
                     }
                 }
-                print(playerRepository.player)
                 if playerRepository.player.name != "" {
-//                    isLogin = true
+                    //                    isLogin = true
                     playerName = String(playerRepository.player.name.split(separator: Character(" "))[0])
                     print("success login")
-                }
-                
-//                playerRepository.fetchAllUser()
-                Task {
                     
-                    allPlayers = await playerRepository.allPlayers
+                }
+                Task{
+                    try await playerRepository.fetchAllUser()
                 }
                 
-                print("All Players: \(allPlayers)")
-            }
+                self.allPlayers = playerRepository.allPlayers
+                print(playerRepository.allPlayers)
+                
+                //                print("All Players: \(allPlayers)")
             }
         }
     }
+}
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {

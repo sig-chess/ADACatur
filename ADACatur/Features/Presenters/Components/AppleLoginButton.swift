@@ -45,7 +45,7 @@ struct AppleLoginButton: View {
                                     playerRepository.player.email = fetchedRecord["email"] as! String
                                 }
                             }
-                            print(playerRepository.player)
+//                            print(playerRepository.player)
                             if playerRepository.player.name != "" {
                                 isLogin = true
                                 print("success login")

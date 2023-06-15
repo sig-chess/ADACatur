@@ -71,7 +71,6 @@ class PlayerRepository: ObservableObject {
         
         queryOperation.recordFetchedBlock = { record in
             // Process the fetched record
-            print("Fetched record:", record)
             fetchedRecord = record
         }
         
@@ -90,7 +89,7 @@ class PlayerRepository: ObservableObject {
         
         queryOperation.completionBlock = {
             
-            self.fetchAllUser()
+//            self.fetchAllUser()
             dispatchGroup.leave()
         }
 
@@ -132,63 +131,47 @@ class PlayerRepository: ObservableObject {
         
         let predicate = NSPredicate(value: true)
         let query = CKQuery(recordType: RecordType.player.rawValue, predicate: predicate)
-        query.sortDescriptors = [NSSortDescriptor(key: "eloScore", ascending: true)]
-        let queryOperation = CKQueryOperation(query: query)
+//        query.sortDescriptors = [NSSortDescriptor(key: "eloScore", ascending: true)]
         
-        var returnedItems: [Player] = []
-        
-        queryOperation.recordMatchedBlock = { (returnedRecordID, returnedResult) in
-            switch returnedResult {
-            case .success(let record):
-                guard let name = record["name"] as? String, let email = record["email"] as? String, let eloScore = record["eloScore"] as? Double else { return }
-                returnedItems.append(Player(name: name, email: email, eloScore: eloScore))
-                print(returnedItems)
-            case .failure(let error):
-                print("Error recordMatchedBlock \(error)")
+        database.perform(query, inZoneWith: nil) { (records, error) in
+            if let error = error {
+                print(error)
+            }
+            
+            if let records = records {
+                let models = records.map { record in
+                    Player(recordId: record.recordID, name: record["name"] as? String ?? "", email: record["email"] as? String ?? "", eloScore: record["eloScore"] as? Double ?? 0.0)
+                }
+                self.allPlayers = models
+//                print(self.allPlayers)
             }
             
         }
-        
-        queryOperation.queryResultBlock = { [weak self] returnedResult  in
-            print("Returned queryResultBlock: \(returnedResult)")
-            
-            DispatchQueue.main.async {
-                self?.allPlayers = returnedItems
-            }
-            
-        }
-        
-        database.add(queryOperation)
-        
+//        let queryOperation = CKQueryOperation(query: query)
 //
-//        var returnedItems: Player?
+//        var returnedItems: [Player] = []
 //
 //        queryOperation.recordMatchedBlock = { (returnedRecordID, returnedResult) in
 //            switch returnedResult {
-//                case .success(let record):
-//                    guard let name = record["name"] as? String, let email = record["email"] as? String, let eloScore = record["eloScore"] as? Double else { return }
-//                    returnedItems = Player(name: name, email: email, eloScore: eloScore)
-//                    print("Success fetch : \(returnedItems)")
-//                    print(returnedResult)
-//                case .failure(let error):
-//                    print("Error recordMatchedBlock \(error)")
-//                    print(returnedResult)
-//                }
+//            case .success(let record):
+//                guard let name = record["name"] as? String, let email = record["email"] as? String, let eloScore = record["eloScore"] as? Double else { return }
+//                returnedItems.append(Player(name: name, email: email, eloScore: eloScore))
+////                print(returnedItems)
+//            case .failure(let error):
+//                print("Error recordMatchedBlock \(error)")
+//            }
 //
 //        }
 //
 //        queryOperation.queryResultBlock = { [weak self] returnedResult  in
 //            print("Returned queryResultBlock: \(returnedResult)")
-//
-//            DispatchQueue.main.sync {
-//                self?.player = returnedItems!
+//            DispatchQueue.main.async {
+//                self?.allPlayers = returnedItems
+//                print("All Player: \(self?.allPlayers)")
 //            }
-//
 //
 //        }
 //
-//        print("fetching player : \(player)")
-        
 //        addOperation(operation: queryOperation)
         
     }
