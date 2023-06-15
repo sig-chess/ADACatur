@@ -16,11 +16,13 @@ class PlayerRepository: ObservableObject {
     private var container: CKContainer
     
     @Published var player: Player = Player(name: "", email: "")
+    @Published var allPlayers: [Player] = []
     
     
     init(container: CKContainer) {
         self.container = container
         self.database = self.container.publicCloudDatabase
+        fetchAllUser()
     }
 
     func createPlayer(name: String, email: String, eloScore: Double) {
@@ -56,7 +58,7 @@ class PlayerRepository: ObservableObject {
 //        }
 //    }
     
-    func fetchItems(appleUserId: String, completion: @escaping (CKRecord?) -> Void) {
+    func fetchUser(appleUserId: String, completion: @escaping (CKRecord?) -> Void) {
         
         let predicate = NSPredicate(format: "appleUserId == %@", appleUserId)
         let query = CKQuery(recordType: RecordType.player.rawValue, predicate: predicate)
@@ -87,10 +89,77 @@ class PlayerRepository: ObservableObject {
         database.add(queryOperation)
         
         queryOperation.completionBlock = {
+            
+            self.fetchAllUser()
             dispatchGroup.leave()
         }
 
         dispatchGroup.wait()
+//
+//        var returnedItems: Player?
+//
+//        queryOperation.recordMatchedBlock = { (returnedRecordID, returnedResult) in
+//            switch returnedResult {
+//                case .success(let record):
+//                    guard let name = record["name"] as? String, let email = record["email"] as? String, let eloScore = record["eloScore"] as? Double else { return }
+//                    returnedItems = Player(name: name, email: email, eloScore: eloScore)
+//                    print("Success fetch : \(returnedItems)")
+//                    print(returnedResult)
+//                case .failure(let error):
+//                    print("Error recordMatchedBlock \(error)")
+//                    print(returnedResult)
+//                }
+//
+//        }
+//
+//        queryOperation.queryResultBlock = { [weak self] returnedResult  in
+//            print("Returned queryResultBlock: \(returnedResult)")
+//
+//            DispatchQueue.main.sync {
+//                self?.player = returnedItems!
+//            }
+//
+//
+//        }
+//
+//        print("fetching player : \(player)")
+        
+//        addOperation(operation: queryOperation)
+        
+    }
+    
+    func fetchAllUser() {
+        
+        let predicate = NSPredicate(value: true)
+        let query = CKQuery(recordType: RecordType.player.rawValue, predicate: predicate)
+        query.sortDescriptors = [NSSortDescriptor(key: "eloScore", ascending: true)]
+        let queryOperation = CKQueryOperation(query: query)
+        
+        var returnedItems: [Player] = []
+        
+        queryOperation.recordMatchedBlock = { (returnedRecordID, returnedResult) in
+            switch returnedResult {
+            case .success(let record):
+                guard let name = record["name"] as? String, let email = record["email"] as? String, let eloScore = record["eloScore"] as? Double else { return }
+                returnedItems.append(Player(name: name, email: email, eloScore: eloScore))
+                print(returnedItems)
+            case .failure(let error):
+                print("Error recordMatchedBlock \(error)")
+            }
+            
+        }
+        
+        queryOperation.queryResultBlock = { [weak self] returnedResult  in
+            print("Returned queryResultBlock: \(returnedResult)")
+            
+            DispatchQueue.main.async {
+                self?.allPlayers = returnedItems
+            }
+            
+        }
+        
+        database.add(queryOperation)
+        
 //
 //        var returnedItems: Player?
 //

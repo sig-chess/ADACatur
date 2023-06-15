@@ -52,8 +52,14 @@ private var playerMatches: [PlayerMatch] = [
 ]
 
 struct HomeView: View {
+    
+    @Environment(\.cloudKitContainer) var cloudKitContainer
     @State private var selectedTab: Tab = .leaderboard
     @State private var showSheet: Bool = false
+    
+    @State private var playerName: String = ""
+    @State private var allPlayers: [Player] = []
+    @AppStorage("userID") private var userID: String = ""
     
     
     var body: some View {
@@ -64,12 +70,12 @@ struct HomeView: View {
             }.pickerStyle(.segmented)
             
             if selectedTab == Tab.leaderboard {
-                LeaderboardView(players: players)
+                LeaderboardView(players: allPlayers)
             } else {
                 MatchHistoryView(playerMatches: playerMatches)
             }
         }
-        .navigationTitle(Text("Hi \("Ivan")!"))
+        .navigationTitle(Text("Hi \(playerName)!"))
         .navigationBarItems(trailing: HStack {
             //button 1
             Button(action: {
@@ -82,8 +88,34 @@ struct HomeView: View {
         .sheet(isPresented: $showSheet) {
             Text("Add Match")
         }
+        .onAppear{
+            if let container = cloudKitContainer {
+                
+                let playerRepository = PlayerRepository(container: container)
+                playerRepository.fetchUser(appleUserId: userID) {record in
+                    if let fetchedRecord = record {
+                        playerRepository.player.name = fetchedRecord["name"] as! String
+                        playerRepository.player.email = fetchedRecord["email"] as! String
+                    }
+                }
+                print(playerRepository.player)
+                if playerRepository.player.name != "" {
+//                    isLogin = true
+                    playerName = String(playerRepository.player.name.split(separator: Character(" "))[0])
+                    print("success login")
+                }
+                
+//                playerRepository.fetchAllUser()
+                Task {
+                    
+                    allPlayers = await playerRepository.allPlayers
+                }
+                
+                print("All Players: \(allPlayers)")
+            }
+            }
+        }
     }
-}
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
