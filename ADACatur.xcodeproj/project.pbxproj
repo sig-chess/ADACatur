@@ -29,6 +29,7 @@
 		B1A18B1F2A2659E20099C5EF /* EloView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A18B1E2A2659E20099C5EF /* EloView.swift */; };
 		B1A18B212A265A8C0099C5EF /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A18B202A265A8C0099C5EF /* LoginScreen.swift */; };
 		B1A18B252A265D1C0099C5EF /* AppleLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A18B242A265D1C0099C5EF /* AppleLoginButton.swift */; };
+		B6BEEACC2A3C4DAF007718AB /* RecordMatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BEEACB2A3C4DAF007718AB /* RecordMatchView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		B1A18B1E2A2659E20099C5EF /* EloView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EloView.swift; sourceTree = "<group>"; };
 		B1A18B202A265A8C0099C5EF /* LoginScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
 		B1A18B242A265D1C0099C5EF /* AppleLoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginButton.swift; sourceTree = "<group>"; };
+		B6BEEACB2A3C4DAF007718AB /* RecordMatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordMatchView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,6 +193,7 @@
 				2C0B058B2A34B32000A75D30 /* MatchHistoryView.swift */,
 				2C0B058D2A34B8CD00A75D30 /* HomeView.swift */,
 				2C0B058F2A34BB4700A75D30 /* ContentView.swift */,
+				B6BEEACB2A3C4DAF007718AB /* RecordMatchView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -285,6 +288,7 @@
 				2C0B05932A34CA6100A75D30 /* PlayerRepository.swift in Sources */,
 				2C0B05862A34A50A00A75D30 /* PlayerMatch.swift in Sources */,
 				2CE3AEF22A2651790022580D /* ExampleUtilities.swift in Sources */,
+				B6BEEACC2A3C4DAF007718AB /* RecordMatchView.swift in Sources */,
 				2C0B058C2A34B32000A75D30 /* MatchHistoryView.swift in Sources */,
 				B1A18B252A265D1C0099C5EF /* AppleLoginButton.swift in Sources */,
 				2C0B05842A34A4BD00A75D30 /* Match.swift in Sources */,
