@@ -9,7 +9,7 @@ import Foundation
 import AuthenticationServices
 import CloudKit
 
-struct Player {
+struct Player: Hashable {
     var recordId: CKRecord.ID?
     var name: String
     var email: String

@@ -61,7 +61,6 @@ struct HomeView: View {
     @State private var allPlayers: [Player] = []
     @AppStorage("userID") private var userID: String = ""
     
-    
     var body: some View {
         VStack {
             Picker("", selection: $selectedTab) {
@@ -86,7 +85,8 @@ struct HomeView: View {
             }
         })
         .sheet(isPresented: $showSheet) {
-            Text("Add Match")
+//            Text("Add Match")
+            RecordMatchView(allPlayers: self.allPlayers)
         }
         .onAppear{
             if let container = cloudKitContainer {

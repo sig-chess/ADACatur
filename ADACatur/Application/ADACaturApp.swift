@@ -25,10 +25,10 @@ struct ADACaturApp: App {
     
     var body: some Scene {
         WindowGroup {
-//            ContentView()
-//                .environment(\.cloudKitContainer, container)
+            ContentView()
+                .environment(\.cloudKitContainer, container)
             
-            RecordMatchView()
+//            RecordMatchView()
         }
     }
 }
