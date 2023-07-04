@@ -44,20 +44,6 @@ class PlayerRepository: ObservableObject {
         save(record: record)
     }
     
-//    func iCloudUserIDAsync(complete: @escaping (_ instance: CKRecord.ID?, _ error: NSError?) -> ()) {
-////        let container = CKContainer.default()
-//        container.fetchUserRecordID() {
-//            recordID, error in
-//            if error != nil {
-//                print(error!.localizedDescription)
-//                complete(nil, error as NSError?)
-//            } else {
-//                print("fetched ID \(recordID?.recordName)")
-//                complete(recordID, nil)
-//            }
-//        }
-//    }
-    
     func fetchUser(appleUserId: String, completion: @escaping (CKRecord?) -> Void) {
         
         let predicate = NSPredicate(format: "appleUserId == %@", appleUserId)

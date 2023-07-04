@@ -11,21 +11,22 @@ struct RecordMatchView: View {
     
     @Environment(\.cloudKitContainer) var cloudKitContainer
     
-    @State private var selectedOpponent: Player?
+    @State private var selectedOpponent = 0
     @State private var selectedResult = "Win"
     
     @State var allPlayers: [Player]?
+    @State var currentPlayer: Player?
     
     private let results = ["Win", "Draw", "Lose"]
     var body: some View {
         Form{
             Section{
                 Picker("Opponent Name", selection: $selectedOpponent){
-                    ForEach(allPlayers ?? [], id: \.self.recordId){ player in
-                        Text(player.name)
+                    ForEach(0..<allPlayers!.count){
+                        Text("\(allPlayers![$0].name)")
                     }
                 }
-//                .pickerStyle(.menu)
+                .pickerStyle(.menu)
             }
             
             Section {
@@ -34,16 +35,27 @@ struct RecordMatchView: View {
                         Text($0)
                     }
                 }
-//                .pickerStyle(.menu)
-                
+                .pickerStyle(.menu)
             } header: {
                 Text("Match Result")
             }
-
+            Button{
+                print(currentPlayer?.recordId)
+                print(allPlayers![selectedOpponent].recordId)
+                print(allPlayers![selectedOpponent].name)
+                print(selectedResult)
+            }label: {
+                Text("Done")
+            }
         }
+      
+//
         .onAppear{
-            print(allPlayers)
-            selectedOpponent = allPlayers?.first
+//            selectedOpponent = allPlayers?.first
+            print(currentPlayer?.name)
+        }
+        .onChange(of: selectedOpponent) { newValue in
+            print(allPlayers![newValue].name)
         }
     }
 }
