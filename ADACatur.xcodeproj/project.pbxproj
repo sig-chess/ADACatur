@@ -23,8 +23,6 @@
 		2C9075842A264F53006BE4CA /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9075832A264F53006BE4CA /* Theme.swift */; };
 		2C9075862A265085006BE4CA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9075852A265085006BE4CA /* Constants.swift */; };
 		2C9075882A2650E1006BE4CA /* ExampleReusableCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9075872A2650E1006BE4CA /* ExampleReusableCode.swift */; };
-		2CE3AEEE2A2651380022580D /* ExampleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE3AEED2A2651380022580D /* ExampleModel.swift */; };
-		2CE3AEF02A2651650022580D /* ExampleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE3AEEF2A2651650022580D /* ExampleViewModel.swift */; };
 		2CE3AEF22A2651790022580D /* ExampleUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE3AEF12A2651790022580D /* ExampleUtilities.swift */; };
 		B1A18B1F2A2659E20099C5EF /* EloView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A18B1E2A2659E20099C5EF /* EloView.swift */; };
 		B1A18B212A265A8C0099C5EF /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A18B202A265A8C0099C5EF /* LoginScreen.swift */; };
@@ -51,8 +49,6 @@
 		2C9075832A264F53006BE4CA /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		2C9075852A265085006BE4CA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2C9075872A2650E1006BE4CA /* ExampleReusableCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleReusableCode.swift; sourceTree = "<group>"; };
-		2CE3AEED2A2651380022580D /* ExampleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleModel.swift; sourceTree = "<group>"; };
-		2CE3AEEF2A2651650022580D /* ExampleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViewModel.swift; sourceTree = "<group>"; };
 		2CE3AEF12A2651790022580D /* ExampleUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleUtilities.swift; sourceTree = "<group>"; };
 		B1A18B1E2A2659E20099C5EF /* EloView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EloView.swift; sourceTree = "<group>"; };
 		B1A18B202A265A8C0099C5EF /* LoginScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
@@ -147,7 +143,6 @@
 		2C90757C2A264E21006BE4CA /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				2CE3AEED2A2651380022580D /* ExampleModel.swift */,
 				2C0B05792A349D7A00A75D30 /* Player.swift */,
 				2C0B05832A34A4BD00A75D30 /* Match.swift */,
 				2C0B05852A34A50A00A75D30 /* PlayerMatch.swift */,
@@ -158,7 +153,6 @@
 		2C90757D2A264E2A006BE4CA /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				2CE3AEEF2A2651650022580D /* ExampleViewModel.swift */,
 				2C0B05922A34CA6100A75D30 /* PlayerRepository.swift */,
 			);
 			path = ViewModels;
@@ -292,7 +286,6 @@
 				2C0B058C2A34B32000A75D30 /* MatchHistoryView.swift in Sources */,
 				B1A18B252A265D1C0099C5EF /* AppleLoginButton.swift in Sources */,
 				2C0B05842A34A4BD00A75D30 /* Match.swift in Sources */,
-				2CE3AEEE2A2651380022580D /* ExampleModel.swift in Sources */,
 				2C0B05802A34A40D00A75D30 /* MatchRow.swift in Sources */,
 				2C0B05902A34BB4700A75D30 /* ContentView.swift in Sources */,
 				2C0B057A2A349D7A00A75D30 /* Player.swift in Sources */,
@@ -300,7 +293,6 @@
 				2C9075882A2650E1006BE4CA /* ExampleReusableCode.swift in Sources */,
 				B1A18B1F2A2659E20099C5EF /* EloView.swift in Sources */,
 				2C90756B2A2641FE006BE4CA /* ADACaturApp.swift in Sources */,
-				2CE3AEF02A2651650022580D /* ExampleViewModel.swift in Sources */,
 				2C0B057E2A34A04900A75D30 /* LeaderboardView.swift in Sources */,
 				2C0B05782A349D5E00A75D30 /* PlayerRow.swift in Sources */,
 				2C9075862A265085006BE4CA /* Constants.swift in Sources */,
