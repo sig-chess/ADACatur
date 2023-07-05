@@ -24,8 +24,6 @@ struct Player: Hashable {
         self.appleUserId = nil
     }
     
-
-    
     /** Create player using AppleID credentials */
     init?(recordId: CKRecord.ID? = nil, credentials: ASAuthorizationAppleIDCredential) {
         guard

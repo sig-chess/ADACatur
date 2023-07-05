@@ -44,20 +44,6 @@ class PlayerRepository: ObservableObject {
         save(record: record)
     }
     
-//    func iCloudUserIDAsync(complete: @escaping (_ instance: CKRecord.ID?, _ error: NSError?) -> ()) {
-////        let container = CKContainer.default()
-//        container.fetchUserRecordID() {
-//            recordID, error in
-//            if error != nil {
-//                print(error!.localizedDescription)
-//                complete(nil, error as NSError?)
-//            } else {
-//                print("fetched ID \(recordID?.recordName)")
-//                complete(recordID, nil)
-//            }
-//        }
-//    }
-    
     func fetchUser(appleUserId: String, completion: @escaping (CKRecord?) -> Void) {
         
         let predicate = NSPredicate(format: "appleUserId == %@", appleUserId)
@@ -88,50 +74,18 @@ class PlayerRepository: ObservableObject {
         database.add(queryOperation)
         
         queryOperation.completionBlock = {
-            
-//            self.fetchAllUser()
             dispatchGroup.leave()
         }
 
         dispatchGroup.wait()
-//
-//        var returnedItems: Player?
-//
-//        queryOperation.recordMatchedBlock = { (returnedRecordID, returnedResult) in
-//            switch returnedResult {
-//                case .success(let record):
-//                    guard let name = record["name"] as? String, let email = record["email"] as? String, let eloScore = record["eloScore"] as? Double else { return }
-//                    returnedItems = Player(name: name, email: email, eloScore: eloScore)
-//                    print("Success fetch : \(returnedItems)")
-//                    print(returnedResult)
-//                case .failure(let error):
-//                    print("Error recordMatchedBlock \(error)")
-//                    print(returnedResult)
-//                }
-//
-//        }
-//
-//        queryOperation.queryResultBlock = { [weak self] returnedResult  in
-//            print("Returned queryResultBlock: \(returnedResult)")
-//
-//            DispatchQueue.main.sync {
-//                self?.player = returnedItems!
-//            }
-//
-//
-//        }
-//
-//        print("fetching player : \(player)")
-        
-//        addOperation(operation: queryOperation)
-        
     }
     
     func fetchAllUser() {
         
         let predicate = NSPredicate(value: true)
         let query = CKQuery(recordType: RecordType.player.rawValue, predicate: predicate)
-//        query.sortDescriptors = [NSSortDescriptor(key: "eloScore", ascending: true)]
+        // TODO: uncomment once we want to sort this
+        // query.sortDescriptors = [NSSortDescriptor(key: "eloScore", ascending: true)]
         
         database.perform(query, inZoneWith: nil) { (records, error) in
             if let error = error {
@@ -147,33 +101,6 @@ class PlayerRepository: ObservableObject {
             }
             
         }
-//        let queryOperation = CKQueryOperation(query: query)
-//
-//        var returnedItems: [Player] = []
-//
-//        queryOperation.recordMatchedBlock = { (returnedRecordID, returnedResult) in
-//            switch returnedResult {
-//            case .success(let record):
-//                guard let name = record["name"] as? String, let email = record["email"] as? String, let eloScore = record["eloScore"] as? Double else { return }
-//                returnedItems.append(Player(name: name, email: email, eloScore: eloScore))
-////                print(returnedItems)
-//            case .failure(let error):
-//                print("Error recordMatchedBlock \(error)")
-//            }
-//
-//        }
-//
-//        queryOperation.queryResultBlock = { [weak self] returnedResult  in
-//            print("Returned queryResultBlock: \(returnedResult)")
-//            DispatchQueue.main.async {
-//                self?.allPlayers = returnedItems
-//                print("All Player: \(self?.allPlayers)")
-//            }
-//
-//        }
-//
-//        addOperation(operation: queryOperation)
-        
     }
     
     func addOperation(operation: CKDatabaseOperation) {
