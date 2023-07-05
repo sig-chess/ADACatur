@@ -7,7 +7,7 @@
 
 import Foundation
 
-let containerName = "iCloud.com.ada.sig-chess.adacatur"
+let containerName = "iCloud.belajar.newBelajarCloudkit"
 
 enum RecordType: String {
     case player = "Player"

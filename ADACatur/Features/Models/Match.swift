@@ -7,8 +7,10 @@
 
 import Foundation
 
-struct Match: Identifiable {
+struct Match {
     var id: UUID = UUID()
+//    let recordId: CKRecord.ID?
+//    let hostAppleId: String
     let startedAt: Date
     let finishedAt: Date
     let note: String

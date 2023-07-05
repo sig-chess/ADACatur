@@ -9,10 +9,10 @@ import Foundation
 import AuthenticationServices
 import CloudKit
 
-struct Player {
+struct Player: Hashable {
     var recordId: CKRecord.ID?
-    let name: String
-    let email: String
+    var name: String
+    var email: String
     let appleUserId: String?
     let eloScore: Double
 
@@ -23,6 +23,8 @@ struct Player {
         self.eloScore = eloScore
         self.appleUserId = nil
     }
+    
+
     
     /** Create player using AppleID credentials */
     init?(recordId: CKRecord.ID? = nil, credentials: ASAuthorizationAppleIDCredential) {

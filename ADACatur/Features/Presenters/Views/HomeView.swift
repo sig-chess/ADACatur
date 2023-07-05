@@ -52,9 +52,14 @@ private var playerMatches: [PlayerMatch] = [
 ]
 
 struct HomeView: View {
+    
+    @Environment(\.cloudKitContainer) var cloudKitContainer
     @State private var selectedTab: Tab = .leaderboard
     @State private var showSheet: Bool = false
     
+    @State private var playerName: String = ""
+    @State private var allPlayers: [Player] = []
+    @AppStorage("userID") private var userID: String = ""
     
     var body: some View {
         VStack {
@@ -64,23 +69,50 @@ struct HomeView: View {
             }.pickerStyle(.segmented)
             
             if selectedTab == Tab.leaderboard {
-                LeaderboardView(players: players)
+                LeaderboardView(players: allPlayers)
             } else {
                 MatchHistoryView(playerMatches: playerMatches)
             }
         }
-        .navigationTitle(Text("Hi \("Ivan")!"))
+        .navigationTitle(Text("Hi \(playerName)!"))
         .navigationBarItems(trailing: HStack {
             //button 1
             Button(action: {
                 showSheet.toggle()
             }) {
                 Image(systemName: "plus")
-                .frame(width: 20, height: 20)
+                    .frame(width: 20, height: 20)
             }
         })
         .sheet(isPresented: $showSheet) {
-            Text("Add Match")
+//            Text("Add Match")
+            RecordMatchView(allPlayers: self.allPlayers)
+        }
+        .onAppear{
+            if let container = cloudKitContainer {
+                
+                let playerRepository = PlayerRepository(container: container)
+                playerRepository.fetchUser(appleUserId: userID) {record in
+                    if let fetchedRecord = record {
+                        playerRepository.player.name = fetchedRecord["name"] as! String
+                        playerRepository.player.email = fetchedRecord["email"] as! String
+                    }
+                }
+                if playerRepository.player.name != "" {
+                    //                    isLogin = true
+                    playerName = String(playerRepository.player.name.split(separator: Character(" "))[0])
+                    print("success login")
+                    
+                }
+                Task{
+                    try await playerRepository.fetchAllUser()
+                }
+                
+                self.allPlayers = playerRepository.allPlayers
+                print(playerRepository.allPlayers)
+                
+                //                print("All Players: \(allPlayers)")
+            }
         }
     }
 }

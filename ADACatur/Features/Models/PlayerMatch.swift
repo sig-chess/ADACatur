@@ -15,6 +15,7 @@ enum ResultType: String {
 
 struct PlayerMatch: Identifiable {
     var id: UUID = UUID()
+    
     let player: Player
     let match: Match
     let result: ResultType
