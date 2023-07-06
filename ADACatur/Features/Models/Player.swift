@@ -9,7 +9,7 @@ import Foundation
 import AuthenticationServices
 import CloudKit
 
-struct Player: Hashable {
+struct Player: Hashable, Equatable {
     var recordId: CKRecord.ID?
     var name: String
     var email: String
@@ -24,6 +24,8 @@ struct Player: Hashable {
         self.appleUserId = nil
     }
     
+
+    
     /** Create player using AppleID credentials */
     init?(recordId: CKRecord.ID? = nil, credentials: ASAuthorizationAppleIDCredential) {
         guard
@@ -37,5 +39,12 @@ struct Player: Hashable {
         self.email = email
         self.appleUserId = credentials.user
         self.eloScore = 0.0
+    }
+    
+    static func == (lhs: Player, rhs: Player) -> Bool {
+        if let lhsRecordId = lhs.recordId, let rhsRecordId = rhs.recordId {
+            return lhsRecordId.recordName == rhsRecordId.recordName
+        }
+        return false
     }
 }

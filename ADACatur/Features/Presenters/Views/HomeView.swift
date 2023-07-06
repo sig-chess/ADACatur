@@ -54,11 +54,13 @@ private var playerMatches: [PlayerMatch] = [
 struct HomeView: View {
     
     @Environment(\.cloudKitContainer) var cloudKitContainer
+  
     @State private var selectedTab: Tab = .leaderboard
     @State private var showSheet: Bool = false
-    
     @State private var playerName: String = ""
     @State private var allPlayers: [Player] = []
+    @State private var currentPlayer: Player?
+  
     @AppStorage("userID") private var userID: String = ""
     
     var body: some View {
@@ -85,8 +87,7 @@ struct HomeView: View {
             }
         })
         .sheet(isPresented: $showSheet) {
-//            Text("Add Match")
-            RecordMatchView(allPlayers: self.allPlayers)
+            RecordMatchView(allPlayers: self.allPlayers, currentPlayer: self.currentPlayer)
         }
         .onAppear{
             if let container = cloudKitContainer {
@@ -96,13 +97,15 @@ struct HomeView: View {
                     if let fetchedRecord = record {
                         playerRepository.player.name = fetchedRecord["name"] as! String
                         playerRepository.player.email = fetchedRecord["email"] as! String
+                        playerRepository.player.recordId = fetchedRecord.recordID
                     }
                 }
                 if playerRepository.player.name != "" {
-                    //                    isLogin = true
+                    // TODO: flag whether user has already login
+                    // isLogin = true
                     playerName = String(playerRepository.player.name.split(separator: Character(" "))[0])
+                    self.currentPlayer = playerRepository.player
                     print("success login")
-                    
                 }
                 Task{
                     try await playerRepository.fetchAllUser()
@@ -110,8 +113,6 @@ struct HomeView: View {
                 
                 self.allPlayers = playerRepository.allPlayers
                 print(playerRepository.allPlayers)
-                
-                //                print("All Players: \(allPlayers)")
             }
         }
     }
