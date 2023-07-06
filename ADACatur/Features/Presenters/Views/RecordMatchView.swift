@@ -22,6 +22,7 @@ struct RecordMatchView: View {
         Form{
             Section{
                 Picker("Opponent Name", selection: $selectedOpponent){
+
                     ForEach(0..<allPlayers!.count){
                         Text("\(allPlayers![$0].name)")
                     }
@@ -47,12 +48,6 @@ struct RecordMatchView: View {
             }label: {
                 Text("Done")
             }
-        }
-      
-//
-        .onAppear{
-//            selectedOpponent = allPlayers?.first
-            print(currentPlayer?.name)
         }
         .onChange(of: selectedOpponent) { newValue in
             print(allPlayers![newValue].name)
