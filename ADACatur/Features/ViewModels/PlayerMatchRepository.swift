@@ -101,7 +101,7 @@ class PlayerMatchRepository: ObservableObject {
                         do {
                             let playerOpponentRecord = try await playerOpponentDatabase.perform(playerOpponentQuery, inZoneWith: nil)
                             for pRecord in playerOpponentRecord {
-                                print("\(pRecord["name"]!)")
+//                                print("\(pRecord["name"]!)")
                                 fetchedOpponent = Player(recordId: pRecord.recordID,name: pRecord["name"] as! String, email: pRecord["email"] as! String,eloScore: pRecord["eloScore"] as! Double )
                             }
                         } catch let playerOpponentError {
@@ -125,7 +125,7 @@ class PlayerMatchRepository: ObservableObject {
                 
                 self.allPlayerMatches.append(PlayerMatch(player: fetchedOpponent, match: fetchedMatch, result: returnResult, eloChange: record["eloChange"] as! Double))
             }
-            print(allPlayerMatches)
+//            print(allPlayerMatches)
         } catch let error {
             print(error)
         }

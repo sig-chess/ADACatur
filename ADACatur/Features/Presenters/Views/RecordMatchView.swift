@@ -15,7 +15,7 @@ struct RecordMatchView: View {
     @State private var selectedOpponent = 0
     @State private var selectedResult = ResultType.win
     
-    @Binding var allPlayers: [Player]?
+    @Binding var allPlayers: [Player]
     @State var currentPlayer: Player?
     
     private let results = [ResultType.win, ResultType.draw, ResultType.lose]
@@ -24,8 +24,8 @@ struct RecordMatchView: View {
             Section{
                 Picker("Opponent Name", selection: $selectedOpponent){
 
-                    ForEach(0..<allPlayers!.count){
-                        Text("\(allPlayers![$0].name)")
+                    ForEach(0..<allPlayers.count){
+                        Text("\(allPlayers[$0].name)")
                     }
                 }
                 .pickerStyle(.menu)
@@ -57,7 +57,7 @@ struct RecordMatchView: View {
             }
         }
         .onChange(of: selectedOpponent) { newValue in
-            print(allPlayers![newValue].name)
+            print(allPlayers[newValue].name)
         }
     }
     func addMatch() async {
@@ -76,9 +76,9 @@ struct RecordMatchView: View {
             scoreCurrentPlayer = 0.5
         }
         
-        let playerA = allPlayers?.first(where: {$0.recordId == currentPlayer?.recordId})
+        let playerA = allPlayers.first(where: {$0.recordId == currentPlayer?.recordId})
         
-        let playerB = allPlayers?.first(where: {$0.recordId == allPlayers![selectedOpponent].recordId})
+        let playerB = allPlayers.first(where: {$0.recordId == allPlayers[selectedOpponent].recordId})
         
         let (eloChangeA, eloChangeB) = CalculateElo.calculateEloChange(playerARating: playerA!.eloScore, playerBRating: playerB!.eloScore, playerAScore: scoreCurrentPlayer, kFactor: 32)
         
@@ -93,9 +93,9 @@ struct RecordMatchView: View {
             
             newMatch.recordId = matchRecord.recordID
             
-            let newPlayerMatch1 = PlayerMatch(player: (allPlayers?.first(where: {$0.recordId == currentPlayer?.recordId}))!, match: newMatch, result: selectedResult, eloChange: (eloChangeA - playerA!.eloScore ))
+            let newPlayerMatch1 = PlayerMatch(player: (allPlayers.first(where: {$0.recordId == currentPlayer?.recordId}))!, match: newMatch, result: selectedResult, eloChange: (eloChangeA - playerA!.eloScore ))
             
-            let newPlayerMatch2 = PlayerMatch(player: (allPlayers?.first(where: {$0.recordId == allPlayers![selectedOpponent].recordId}))!, match: newMatch, result: opponentResult, eloChange: (eloChangeB - playerB!.eloScore ))
+            let newPlayerMatch2 = PlayerMatch(player: (allPlayers.first(where: {$0.recordId == allPlayers[selectedOpponent].recordId}))!, match: newMatch, result: opponentResult, eloChange: (eloChangeB - playerB!.eloScore ))
             
             playerMatchRepository.addPlayerMatch(playerMatch1: newPlayerMatch1, playerMatch2: newPlayerMatch2)
             

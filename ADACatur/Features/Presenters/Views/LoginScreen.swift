@@ -10,6 +10,7 @@ import SwiftUI
 struct LoginScreen: View {
     @Environment(\.cloudKitContainer) var cloudKitContainer
     @State private var isLogin: Bool = false
+    @State private var isShowingProgress: Bool = false
     
     @AppStorage("userID") private var userID: String = ""
     
@@ -19,29 +20,37 @@ struct LoginScreen: View {
                 .resizable()
                 .scaledToFill()
                 .edgesIgnoringSafeArea(.all)
-                .opacity(0.8)
+                .opacity(isShowingProgress ? 0 : 0.8)
+            
             VStack{
                 Spacer()
                 AppleLoginButton(isLogin: $isLogin)
                     .frame(width: 345,height: 44)
             }
+            .opacity(isShowingProgress ? 0 : 1)
             NavigationLink(destination: HomeView().navigationBarBackButtonHidden(true), isActive: $isLogin) {
                 EmptyView()
             }
+            .opacity(isShowingProgress ? 0 : 1)
+            ProgressView().opacity(isShowingProgress ? 1 : 0)
         }
         .onAppear{
-            if let container = cloudKitContainer {
-                
-                let playerRepository = PlayerRepository(container: container)
-                Task {
-                    let _ = await playerRepository.fetchUser(appleUserId: userID)
-                    if playerRepository.player.name != "" {
-                        isLogin = true
-                        print("success login")
+            if userID != "" {
+                if let container = cloudKitContainer {
+                    isShowingProgress = true
+                    let playerRepository = PlayerRepository(container: container)
+                    Task {
+                        let _ = await playerRepository.fetchUser(appleUserId: userID)
+                        if playerRepository.player.name != "" {
+                            isLogin = true
+                            isShowingProgress = false
+    //                        print("success login")
+                        }
                     }
+                    
                 }
-                
             }
+            
         }
         
     }

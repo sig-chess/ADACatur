@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LeaderboardView: View {
-    public var players: [Player]
+    @Binding var players: [Player]
     @Binding var isShowingProgress: Bool
     
     var body: some View {
@@ -59,6 +59,6 @@ struct LeaderboardView_Previews: PreviewProvider {
     ]
     
     static var previews: some View {
-        LeaderboardView(players: players, isShowingProgress: .constant(false))
+        LeaderboardView(players: .constant(players), isShowingProgress: .constant(false))
     }
 }
