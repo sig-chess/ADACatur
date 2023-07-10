@@ -38,12 +38,8 @@ struct AppleLoginButton: View {
                             userID = appleIdCredentials.user
                             
                             //                            var player = Player(name: "", email: "")
-                   
-                            playerRepository.fetchUser(appleUserId: userID) {record in
-                                if let fetchedRecord = record {
-                                    playerRepository.player.name = fetchedRecord["name"] as! String
-                                    playerRepository.player.email = fetchedRecord["email"] as! String
-                                }
+                            Task {
+                               await playerRepository.fetchUser(appleUserId: userID)
                             }
 //                            print(playerRepository.player)
                             if playerRepository.player.name != "" {

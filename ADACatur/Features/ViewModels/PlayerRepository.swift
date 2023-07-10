@@ -22,8 +22,13 @@ class PlayerRepository: ObservableObject {
     init(container: CKContainer) {
         self.container = container
         self.database = self.container.publicCloudDatabase
-        fetchAllUser()
+        Task {
+            await fetchAllUser()
+        }
+        
     }
+    
+    
 
     func createPlayer(name: String, email: String, eloScore: Double) {
         let record = CKRecord(recordType: RecordType.player.rawValue)
@@ -44,67 +49,59 @@ class PlayerRepository: ObservableObject {
         save(record: record)
     }
     
-    func fetchUser(appleUserId: String, completion: @escaping (CKRecord?) -> Void) {
+    func fetchUser(appleUserId: String) async -> Player {
         
         let predicate = NSPredicate(format: "appleUserId == %@", appleUserId)
         let query = CKQuery(recordType: RecordType.player.rawValue, predicate: predicate)
         
         
-        let queryOperation = CKQueryOperation(query: query)
-        queryOperation.resultsLimit = 1
-        
-        var fetchedRecord: CKRecord?
-        
-        queryOperation.recordFetchedBlock = { record in
-            // Process the fetched record
-            fetchedRecord = record
+        do {
+            let records = try await database.perform(query, inZoneWith: nil)
+            let firstRecord = records.first
+            player = Player(recordId: firstRecord?.recordID, name: firstRecord!["name"] as! String, email: firstRecord!["email"] as! String, eloScore: firstRecord!["eloScore"] as! Double)
+            return player
+        } catch let error {
+            print(error)
         }
         
-        queryOperation.queryCompletionBlock = { (cursor, error) in
-            if let error = error {
-                print("Error fetching record: \(error.localizedDescription)")
-            }
-            
-            completion(fetchedRecord)
-        }
-        
-        let dispatchGroup = DispatchGroup()
-        dispatchGroup.enter()
-        
-        database.add(queryOperation)
-        
-        queryOperation.completionBlock = {
-            dispatchGroup.leave()
-        }
-
-        dispatchGroup.wait()
+        return Player(name: "", email: "")
     }
     
-    func fetchAllUser() {
-        
+    func fetchAllUser() async -> [Player]{
         let predicate = NSPredicate(value: true)
         let query = CKQuery(recordType: RecordType.player.rawValue, predicate: predicate)
         // TODO: uncomment once we want to sort this
-        // query.sortDescriptors = [NSSortDescriptor(key: "eloScore", ascending: true)]
-        
-        database.perform(query, inZoneWith: nil) { (records, error) in
-            if let error = error {
-                print(error)
+        query.sortDescriptors = [NSSortDescriptor(key: "eloScore", ascending: true)]
+        do {
+            let records = try await database.perform(query, inZoneWith: nil)
+            let models = records.map { record in
+                Player(recordId: record.recordID, name: record["name"] as? String ?? "", email: record["email"] as? String ?? "", eloScore: record["eloScore"] as? Double ?? 0.0)
             }
-            
-            if let records = records {
-                let models = records.map { record in
-                    Player(recordId: record.recordID, name: record["name"] as? String ?? "", email: record["email"] as? String ?? "", eloScore: record["eloScore"] as? Double ?? 0.0)
-                }
-                self.allPlayers = models
-//                print(self.allPlayers)
-            }
-            
+            self.allPlayers = models
+            return models
+        } catch let error {
+            print(error)
         }
+        return []
     }
     
     func addOperation(operation: CKDatabaseOperation) {
         database.add(operation)
+    }
+    
+    func updateElo(player: Player, eloChange: Double){
+        database.fetch(withRecordID: player.recordId!) { record, error in
+            if let error = error {
+                print(error)
+            }else {
+                record!["eloScore"] = eloChange
+                self.save(record: record!)
+                Task {
+                    await self.fetchAllUser()
+                }
+            }
+
+        }
     }
     
     func save(record: CKRecord) {

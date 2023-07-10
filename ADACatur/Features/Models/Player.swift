@@ -14,9 +14,10 @@ struct Player: Hashable, Equatable {
     var name: String
     var email: String
     let appleUserId: String?
-    let eloScore: Double
+    var eloScore: Double
+//    let record: CKRecord?
 
-    init(recordId: CKRecord.ID? = nil, name: String, email: String, eloScore: Double = 0.0) {
+    init(recordId: CKRecord.ID? = nil, name: String, email: String, eloScore: Double = 600.0) {
         self.recordId = recordId
         self.name = name
         self.email = email
@@ -38,7 +39,11 @@ struct Player: Hashable, Equatable {
         self.name = "\(firstName) \(lastName)"
         self.email = email
         self.appleUserId = credentials.user
-        self.eloScore = 0.0
+        self.eloScore = 600
+    }
+    
+    mutating func updateElo(eloChange: Double){
+        self.eloScore = self.eloScore - eloChange
     }
     
     static func == (lhs: Player, rhs: Player) -> Bool {

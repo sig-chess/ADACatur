@@ -9,21 +9,28 @@ import SwiftUI
 
 struct LeaderboardView: View {
     public var players: [Player]
+    @Binding var isShowingProgress: Bool
     
     var body: some View {
-        if players.isEmpty {
-            VStack {
-                Spacer()
-                
-                Text("No player")
-                
-                Spacer()
+        ZStack {
+            if players.isEmpty {
+                VStack {
+                    Spacer()
+                    
+                    Text("No player")
+                    
+                    Spacer()
+                }
+                .opacity(isShowingProgress ? 0 : 1)
+            } else {
+                List(players, id: \.self.recordId) { player in
+                    PlayerRow(player: player)
+                }
+                .opacity(isShowingProgress ? 0 : 1)
             }
-        } else {
-            List(players, id: \.self.recordId) { player in
-                PlayerRow(player: player)
-            }
+            ProgressView().opacity(isShowingProgress ? 1 : 0)
         }
+        
     }
 }
 
@@ -52,6 +59,6 @@ struct LeaderboardView_Previews: PreviewProvider {
     ]
     
     static var previews: some View {
-        LeaderboardView(players: players)
+        LeaderboardView(players: players, isShowingProgress: .constant(false))
     }
 }

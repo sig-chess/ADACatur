@@ -33,7 +33,7 @@ struct MatchRow: View {
         if result == ResultType.win {
             return "+" + String(format: "%.1f", eloChange)
         } else if result == ResultType.lose {
-            return "-" + String(format: "%.1f", eloChange)
+            return "" + String(format: "%.1f", eloChange)
         } else {
             return String(format: "%.1f", eloChange)
         }

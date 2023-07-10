@@ -11,4 +11,6 @@ let containerName = "iCloud.belajar.newBelajarCloudkit"
 
 enum RecordType: String {
     case player = "Player"
+    case match = "Match"
+    case playerMatch = "PlayerMatch"
 }

@@ -33,17 +33,14 @@ struct LoginScreen: View {
             if let container = cloudKitContainer {
                 
                 let playerRepository = PlayerRepository(container: container)
-                playerRepository.fetchUser(appleUserId: userID) {record in
-                    if let fetchedRecord = record {
-                        playerRepository.player.name = fetchedRecord["name"] as! String
-                        playerRepository.player.email = fetchedRecord["email"] as! String
+                Task {
+                    let _ = await playerRepository.fetchUser(appleUserId: userID)
+                    if playerRepository.player.name != "" {
+                        isLogin = true
+                        print("success login")
                     }
                 }
-                print(playerRepository.player)
-                if playerRepository.player.name != "" {
-                    isLogin = true
-                    print("success login")
-                }
+                
             }
         }
         

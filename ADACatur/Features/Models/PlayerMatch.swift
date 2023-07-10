@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ResultType: String {
+enum ResultType: String, CaseIterable {
     case win = "win"
     case lose = "lose"
     case draw = "draw"
