@@ -19,7 +19,7 @@ class PlayerMatchRepository: ObservableObject {
         self.database = self.container.publicCloudDatabase
     }
     
-    func addPlayerMatch(playerMatch1: PlayerMatch, playerMatch2: PlayerMatch) {
+    func addPlayerMatch(playerMatch1: PlayerMatch, playerMatch2: PlayerMatch) async {
         let record1 = CKRecord(recordType: RecordType.playerMatch.rawValue)
         
         record1["playerId"] = playerMatch1.player.recordId?.recordName
@@ -27,7 +27,7 @@ class PlayerMatchRepository: ObservableObject {
         record1["result"] = playerMatch1.result.rawValue
         record1["eloChange"] = playerMatch1.eloChange
         //
-        save(record: record1)
+        await save(record: record1)
         
         let record2 = CKRecord(recordType: RecordType.playerMatch.rawValue)
         
@@ -35,16 +35,15 @@ class PlayerMatchRepository: ObservableObject {
         record2["matchId"] = playerMatch2.match.recordId?.recordName
         record2["result"] = playerMatch2.result.rawValue
         record2["eloChange"] = playerMatch2.eloChange
-        save(record: record2)
+        await save(record: record2)
     }
     
-    func save(record: CKRecord) {
-        self.database.save(record) { newRecord, error in
-            if let error = error {
-                print(error)
-            } else {
-                print("Success to create record")
-            }
+    func save(record: CKRecord) async {
+        do {
+            let newRecord = try await self.database.save(record)
+            print("Success to create record")
+        } catch let error {
+            print(error)
         }
     }
     
@@ -52,6 +51,7 @@ class PlayerMatchRepository: ObservableObject {
         let predicate = NSPredicate(format: "playerId == %@", player.recordId!.recordName)
         let query = CKQuery(recordType: RecordType.playerMatch.rawValue, predicate: predicate)
         
+        query.sortDescriptors = [NSSortDescriptor(key: "modificationDate", ascending: false)]
         //        let queryOperation = CKQueryOperation(query: query)
         
         do {

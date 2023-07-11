@@ -10,7 +10,8 @@ import AuthenticationServices
 
 struct AppleLoginButton: View {
     @Environment(\.colorScheme) var colorScheme
-    @Environment(\.cloudKitContainer) var cloudKitContainer
+    
+    @EnvironmentObject var state: GlobalState
     
     @AppStorage("userID") private var userID: String = ""
     @Binding public var isLogin: Bool
@@ -32,33 +33,26 @@ struct AppleLoginButton: View {
                     // Handle the user data from `authResult.credential`
                     switch auth.credential {
                     case let appleIdCredentials as ASAuthorizationAppleIDCredential:
-                        if let container = cloudKitContainer {
-                            let playerRepository = PlayerRepository(container: container)
-                            
-                            userID = appleIdCredentials.user
-                            
-                            //                            var player = Player(name: "", email: "")
+                        
+                        userID = appleIdCredentials.user
+                        
+                        //                            var player = Player(name: "", email: "")
+                        Task {
+                            await state.playerRepository.fetchUser(appleUserId: userID)
+                        }
+                        //                            print(playerRepository.player)
+                        if state.playerRepository.player != nil {
+                            isLogin = true
+                            print("success login")
+                        }
+                        else {
                             Task {
-                               await playerRepository.fetchUser(appleUserId: userID)
-                            }
-//                            print(playerRepository.player)
-                            if playerRepository.player.name != "" {
+                                state.playerRepository.createPlayerViaAppleID (
+                                    credentials: appleIdCredentials
+                                )
+                                print("saved new user")
                                 isLogin = true
-                                print("success login")
                             }
-                            else {
-                                Task {
-                                    try await playerRepository.createPlayerViaAppleID(
-                                        credentials: appleIdCredentials
-                                    )
-                                    print("saved new user")
-                                    isLogin = true
-                                }
-                            }
-                            
-                            
-                        } else {
-                            print("Missing cloud kit container")
                         }
                     default:
                         print(auth.credential)

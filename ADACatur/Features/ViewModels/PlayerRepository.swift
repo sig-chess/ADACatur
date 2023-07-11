@@ -15,9 +15,8 @@ class PlayerRepository: ObservableObject {
     private var database: CKDatabase
     private var container: CKContainer
     
-    @Published var player: Player = Player(name: "", email: "")
+    @Published var player: Player?
     @Published var allPlayers: [Player] = []
-    
     
     init(container: CKContainer) {
         self.container = container
@@ -28,89 +27,84 @@ class PlayerRepository: ObservableObject {
         
     }
     
-    
-
     func createPlayer(name: String, email: String, eloScore: Double) {
         let record = CKRecord(recordType: RecordType.player.rawValue)
         let player = Player(name: name, email: email)
-        
-        save(record: record)
+        Task {
+            await save(record: record)
+        }
     }
     
     func createPlayerViaAppleID(credentials: ASAuthorizationAppleIDCredential) {
-        let record = CKRecord(recordType: RecordType.player.rawValue)
-        let player = Player(credentials: credentials)
+       
+        Task {
+            let record = CKRecord(recordType: RecordType.player.rawValue)
+            let player = Player(credentials: credentials)
+            
+            record["name"] = player?.name
+            record["email"] = player?.email
+            record["eloScore"] = player?.eloScore
+            record["appleUserId"] = player?.appleUserId
+            await save(record: record)
+        }
         
-        record["name"] = player?.name
-        record["email"] = player?.email
-        record["eloScore"] = player?.eloScore
-        record["appleUserId"] = player?.appleUserId
-        
-        save(record: record)
     }
     
-    func fetchUser(appleUserId: String) async -> Player {
+    func fetchUser(appleUserId: String) async {
         
         let predicate = NSPredicate(format: "appleUserId == %@", appleUserId)
         let query = CKQuery(recordType: RecordType.player.rawValue, predicate: predicate)
         
-        
         do {
             let records = try await database.perform(query, inZoneWith: nil)
+            
             let firstRecord = records.first
             player = Player(recordId: firstRecord?.recordID, name: firstRecord!["name"] as! String, email: firstRecord!["email"] as! String, eloScore: firstRecord!["eloScore"] as! Double)
-            return player
         } catch let error {
             print(error)
         }
-        
-        return Player(name: "", email: "")
     }
     
-    func fetchAllUser() async -> [Player]{
+    func fetchAllUser() async {
         let predicate = NSPredicate(value: true)
         let query = CKQuery(recordType: RecordType.player.rawValue, predicate: predicate)
         // TODO: uncomment once we want to sort this
-        query.sortDescriptors = [NSSortDescriptor(key: "eloScore", ascending: true)]
+        query.sortDescriptors = [NSSortDescriptor(key: "eloScore", ascending: false)]
         do {
             let records = try await database.perform(query, inZoneWith: nil)
             let models = records.map { record in
                 Player(recordId: record.recordID, name: record["name"] as? String ?? "", email: record["email"] as? String ?? "", eloScore: record["eloScore"] as? Double ?? 0.0)
             }
-            self.allPlayers = models
-            return models
+            DispatchQueue.main.async { [weak self] in
+                self?.allPlayers = models
+            }
+            
+            print(self.allPlayers)
+            
+            print(self.allPlayers)
         } catch let error {
             print(error)
         }
-        return []
     }
     
-    func addOperation(operation: CKDatabaseOperation) {
-        database.add(operation)
-    }
     
-    func updateElo(player: Player, eloChange: Double){
-        database.fetch(withRecordID: player.recordId!) { record, error in
-            if let error = error {
-                print(error)
-            }else {
-                record!["eloScore"] = eloChange
-                self.save(record: record!)
-                Task {
-                    await self.fetchAllUser()
-                }
-            }
-
+    
+    func updateElo(player: Player, eloChange: Double) async{
+        do {
+            let record1 = try await database.record(for: player.recordId!)
+            record1["eloScore"] = eloChange
+            await self.save(record: record1)
+        } catch let error {
+            print(error)
         }
     }
     
-    func save(record: CKRecord) {
-        self.database.save(record) { newRecord, error in
-            if let error = error {
-                print(error)
-            } else {
-                print("Success to create record")
-            }
+    func save(record: CKRecord) async {
+        do {
+            let newRecord = try await self.database.save(record)
+            print("Success to create record")
+        } catch let error {
+            print(error)
         }
     }
 }

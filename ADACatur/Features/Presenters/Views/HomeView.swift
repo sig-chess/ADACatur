@@ -12,58 +12,16 @@ enum Tab {
     case matches
 }
 
-private var players: [Player] = [
-    .init(
-        name: "John Lewis",
-        email: "john@gmail.com",
-        eloScore: 85.5
-    ),
-    .init(
-        name: "Catherine",
-        email: "catherine@gmail.com",
-        eloScore: 65.5
-    ),
-    .init(
-        name: "Raymond Lawrence",
-        email: "raymond@gmail.com",
-        eloScore: 35.5
-    ),
-]
-
-private var playerMatches: [PlayerMatch] = [
-    .init(
-        player: players[0],
-        match: .init(startedAt: .now, finishedAt: .now, note: ""),
-        result: .lose,
-        eloChange: 1.0
-    ),
-    .init(
-        player: players[2],
-        match: .init(startedAt: .now, finishedAt: .now, note: ""),
-        result: .draw,
-        eloChange: 0.0
-    ),
-    .init(
-        player: players[1],
-        match: .init(startedAt: .now, finishedAt: .now, note: ""),
-        result: .win,
-        eloChange: 4.0
-    )
-]
-
 struct HomeView: View {
     
-    @Environment(\.cloudKitContainer) var cloudKitContainer
-  
+    @EnvironmentObject var state: GlobalState
+    
     @State private var selectedTab: Tab = .leaderboard
     @State private var showSheet: Bool = false
     @State private var playerName: String = ""
-    @State private var allPlayers: [Player] = []
-    @State private var currentPlayer: Player?
-    @State var allPlayerMatches: [PlayerMatch] = []
     @State var isShowingProgress: Bool = true
     @State var isShowingProgressHistory: Bool = true
-  
+    
     @AppStorage("userID") private var userID: String = ""
     
     var body: some View {
@@ -75,17 +33,18 @@ struct HomeView: View {
                 }.pickerStyle(.segmented)
                 
                 if selectedTab == Tab.leaderboard {
-                    LeaderboardView(players: $allPlayers, isShowingProgress: $isShowingProgress)
+                    LeaderboardView(isShowingProgress: $isShowingProgress)
+                        .environmentObject(state)
+                        
                 } else {
-                    MatchHistoryView(playerMatches: allPlayerMatches, isShowingProgress: $isShowingProgressHistory)
+                    MatchHistoryView(isShowingProgress: $isShowingProgressHistory)
+                        .environmentObject(state)
                 }
             }
-//            ProgressView().opacity(isShowingProgress ? 1 : 0)
         }
         
         .navigationTitle(Text("Hi \(playerName)!"))
         .navigationBarItems(trailing: HStack {
-            //button 1
             Button(action: {
                 showSheet.toggle()
             }) {
@@ -94,53 +53,27 @@ struct HomeView: View {
             }
         })
         .sheet(isPresented: $showSheet) {
-            RecordMatchView(allPlayers: $allPlayers, currentPlayer: self.currentPlayer)
+            RecordMatchView()
+                .environmentObject(state)
         }
         .onAppear{
-            if let container = cloudKitContainer {
-                let playerRepository = PlayerRepository(container: container)
-                Task {
-                    isShowingProgress = true
-                    isShowingProgressHistory = true
-                    self.currentPlayer = await playerRepository.fetchUser(appleUserId: userID)
-                    playerName = String(currentPlayer!.name.split(separator: Character(" "))[0])
-//                    if playerRepository.player.name != "" {
-//
-//                        self.currentPlayer = playerRepository.player
-////                        print("success login")
-//                    }
-                    Task{
-                        self.allPlayers = await playerRepository.fetchAllUser()
-                        isShowingProgress = false
-                    }
-                    
-                    let playerMatchRepository = PlayerMatchRepository(container: container)
-                    Task{
-                        await playerMatchRepository.fetchPlayerMatch(player: self.currentPlayer!)
-                        self.allPlayerMatches = playerMatchRepository.allPlayerMatches
-                        isShowingProgressHistory = false
-                    }
+            Task {
+                isShowingProgress = true
+                isShowingProgressHistory = true
+                await state.playerRepository.fetchUser(appleUserId: userID)
+                playerName = String(state.playerRepository.player?.name.split(separator: Character(" "))[0] ?? "")
+                Task{
+                    await state.playerRepository.fetchAllUser()
+                    isShowingProgress = false
                 }
+                guard let player = self.state.playerRepository.player else { return }
+                await state.playerMatchRepository.fetchPlayerMatch(player: player)
+                isShowingProgressHistory = false
             }
         }
-//        .refreshable {
-//            if let container = cloudKitContainer {
-//                let playerRepository = PlayerRepository(container: container)
-//                Task {
-//                    isShowingProgress = true
-//                    Task{
-//                        self.allPlayers = await playerRepository.fetchAllUser()
-//                    }
-//
-//                    let playerMatchRepository = PlayerMatchRepository(container: container)
-//                    Task{
-//                        await playerMatchRepository.fetchPlayerMatch(player: self.currentPlayer!)
-//                        self.allPlayerMatches = playerMatchRepository.allPlayerMatches
-//                    }
-//                    isShowingProgress = false
-//                }
-//            }
-//        }
+        
+        
+        
     }
 }
 

@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct LeaderboardView: View {
-    @Binding var players: [Player]
+    @EnvironmentObject var state: GlobalState
     @Binding var isShowingProgress: Bool
     
     var body: some View {
         ZStack {
-            if players.isEmpty {
+            if state.playerRepository.allPlayers.isEmpty {
                 VStack {
                     Spacer()
                     
@@ -23,12 +23,23 @@ struct LeaderboardView: View {
                 }
                 .opacity(isShowingProgress ? 0 : 1)
             } else {
-                List(players, id: \.self.recordId) { player in
+                List(state.playerRepository.allPlayers, id: \.self) { player in
                     PlayerRow(player: player)
                 }
                 .opacity(isShowingProgress ? 0 : 1)
             }
             ProgressView().opacity(isShowingProgress ? 1 : 0)
+        }
+        .onAppear{
+            Task {
+                await state.playerRepository.fetchAllUser()
+            }
+        }
+        .refreshable {
+//                            isShowingProgress = true
+//                            isShowingProgressHistory = true
+            await state.playerRepository.fetchAllUser()
+//                            isShowingProgress = false
         }
         
     }
@@ -59,6 +70,6 @@ struct LeaderboardView_Previews: PreviewProvider {
     ]
     
     static var previews: some View {
-        LeaderboardView(players: .constant(players), isShowingProgress: .constant(false))
+        LeaderboardView(isShowingProgress: .constant(false))
     }
 }

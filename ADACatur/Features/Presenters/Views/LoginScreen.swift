@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct LoginScreen: View {
-    @Environment(\.cloudKitContainer) var cloudKitContainer
+    
+    @EnvironmentObject var state: GlobalState
+    
     @State private var isLogin: Bool = false
+    
     @State private var isShowingProgress: Bool = false
     
     @AppStorage("userID") private var userID: String = ""
@@ -28,7 +31,11 @@ struct LoginScreen: View {
                     .frame(width: 345,height: 44)
             }
             .opacity(isShowingProgress ? 0 : 1)
-            NavigationLink(destination: HomeView().navigationBarBackButtonHidden(true), isActive: $isLogin) {
+            NavigationLink(destination:
+                            HomeView()
+                .environmentObject(state)
+                                .navigationBarBackButtonHidden(true),
+                           isActive: $isLogin) {
                 EmptyView()
             }
             .opacity(isShowingProgress ? 0 : 1)
@@ -36,18 +43,13 @@ struct LoginScreen: View {
         }
         .onAppear{
             if userID != "" {
-                if let container = cloudKitContainer {
+                Task {
                     isShowingProgress = true
-                    let playerRepository = PlayerRepository(container: container)
-                    Task {
-                        let _ = await playerRepository.fetchUser(appleUserId: userID)
-                        if playerRepository.player.name != "" {
-                            isLogin = true
-                            isShowingProgress = false
-    //                        print("success login")
-                        }
+                    let _ = await state.playerRepository.fetchUser(appleUserId: userID)
+                    if state.playerRepository.player != nil {
+                        isLogin = true
+                        isShowingProgress = false
                     }
-                    
                 }
             }
             

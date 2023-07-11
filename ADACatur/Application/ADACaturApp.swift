@@ -8,27 +8,33 @@
 import SwiftUI
 import CloudKit
 
-struct CloudKitContainerKey: EnvironmentKey {
-    static let defaultValue: CKContainer? = nil
-}
-
-extension EnvironmentValues {
-    var cloudKitContainer: CKContainer? {
-        get { self[CloudKitContainerKey.self] }
-        set { self[CloudKitContainerKey.self] = newValue }
+class GlobalState: ObservableObject {
+    
+    let container: CKContainer
+    
+    @Published var playerRepository: PlayerRepository
+    
+    @Published var playerMatchRepository: PlayerMatchRepository
+    
+    @Published var matchRepository: MatchRepository
+    
+    init() {
+        container = CKContainer.init(identifier: containerName)
+        playerRepository = PlayerRepository(container: container)
+        playerMatchRepository = PlayerMatchRepository(container: container)
+        matchRepository = MatchRepository(container: container)
     }
 }
 
 @main
 struct ADACaturApp: App {
-    let container = CKContainer.init(identifier: containerName)
+    
+    @StateObject var state = GlobalState()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(\.cloudKitContainer, container)
-            
-//            RecordMatchView()
+                .environmentObject(state)
         }
     }
 }

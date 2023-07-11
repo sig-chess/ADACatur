@@ -46,10 +46,14 @@ struct Player: Hashable, Equatable {
         self.eloScore = self.eloScore - eloChange
     }
     
+//    static func == (lhs: Player, rhs: Player) -> Bool {
+//        if let lhsRecordId = lhs.recordId, let rhsRecordId = rhs.recordId {
+//            return lhsRecordId.recordName == rhsRecordId.recordName
+//        }
+//        return false
+//    }
+    
     static func == (lhs: Player, rhs: Player) -> Bool {
-        if let lhsRecordId = lhs.recordId, let rhsRecordId = rhs.recordId {
-            return lhsRecordId.recordName == rhsRecordId.recordName
-        }
-        return false
+        return lhs.recordId == rhs.recordId
     }
 }

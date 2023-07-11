@@ -19,25 +19,24 @@ class MatchRepository: ObservableObject {
         self.database = self.container.publicCloudDatabase
     }
     
-    func addMatch(match: Match) -> CKRecord{
+    func addMatch(match: Match) async -> CKRecord{
         let record = CKRecord(recordType: RecordType.match.rawValue)
         
         record["startedAt"] = match.startedAt
         record["finishedAt"] = match.finishedAt
         record["note"] = match.note
         
-        save(record: record)
+        await save(record: record)
         
         return record
     }
     
-    func save(record: CKRecord) {
-        self.database.save(record) { newRecord, error in
-            if let error = error {
-                print(error)
-            } else {
-                print("Success to create record")
-            }
+    func save(record: CKRecord) async {
+        do {
+            let newRecord = try await self.database.save(record)
+            print("Success to create record")
+        } catch let error {
+            print(error)
         }
     }
     
