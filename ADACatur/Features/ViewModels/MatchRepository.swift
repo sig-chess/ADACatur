@@ -8,11 +8,9 @@
 import Foundation
 import CloudKit
 
-class MatchRepository: ObservableObject {
+class MatchRepository {
     private var database: CKDatabase
     private var container: CKContainer
-    
-    
     
     init(container: CKContainer) {
         self.container = container
@@ -26,17 +24,17 @@ class MatchRepository: ObservableObject {
         record["finishedAt"] = match.finishedAt
         record["note"] = match.note
         
-        await save(record: record)
-        
+        try? await save(record: record)
         return record
     }
     
-    func save(record: CKRecord) async {
+    func save(record: CKRecord) async throws {
         do {
-            let newRecord = try await self.database.save(record)
+            try await self.database.save(record)
             print("Success to create record")
         } catch let error {
-            print(error)
+            print(error.localizedDescription)
+            throw error
         }
     }
     

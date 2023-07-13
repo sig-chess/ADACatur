@@ -6,16 +6,13 @@
 //
 
 import SwiftUI
+import AuthenticationServices
 
 struct LoginScreen: View {
     
-    @EnvironmentObject var state: GlobalState
+    //    @EnvironmentObject var state: GlobalState
     
-    @State private var isLogin: Bool = false
-    
-    @State private var isShowingProgress: Bool = false
-    
-    @AppStorage("userID") private var userID: String = ""
+    @ObservedObject var viewModel: LoginViewModel = LoginViewModel()
     
     var body: some View {
         ZStack{
@@ -23,36 +20,31 @@ struct LoginScreen: View {
                 .resizable()
                 .scaledToFill()
                 .edgesIgnoringSafeArea(.all)
-                .opacity(isShowingProgress ? 0 : 0.8)
+                .opacity(viewModel.isShowingProgress ? 0 : 0.8)
             
             VStack{
                 Spacer()
-                AppleLoginButton(isLogin: $isLogin)
-                    .frame(width: 345,height: 44)
-            }
-            .opacity(isShowingProgress ? 0 : 1)
-            NavigationLink(destination:
-                            HomeView()
-                .environmentObject(state)
-                                .navigationBarBackButtonHidden(true),
-                           isActive: $isLogin) {
-                EmptyView()
-            }
-            .opacity(isShowingProgress ? 0 : 1)
-            ProgressView().opacity(isShowingProgress ? 1 : 0)
-        }
-        .onAppear{
-            if userID != "" {
-                Task {
-                    isShowingProgress = true
-                    let _ = await state.playerRepository.fetchUser(appleUserId: userID)
-                    if state.playerRepository.player != nil {
-                        isLogin = true
-                        isShowingProgress = false
+                AppleLoginButton { result in
+                    switch result {
+                    case .success(let auth):
+                        viewModel.createPlayer(auth: auth)
+                    case .failure(_):
+                        // An error occurred during sign-in
+                        // Handle the error
+                        break
                     }
                 }
+                .frame(width: 345,height: 44)
             }
-            
+            .opacity(viewModel.isShowingProgress ? 0 : 1)
+            NavigationLink(destination:
+                            HomeView()
+                .navigationBarBackButtonHidden(true),
+                           isActive: $viewModel.isLogin) {
+                EmptyView()
+            }
+            .opacity(viewModel.isShowingProgress ? 0 : 1)
+            ProgressView().opacity(viewModel.isShowingProgress ? 1 : 0)
         }
         
     }

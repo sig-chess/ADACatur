@@ -8,12 +8,15 @@
 import SwiftUI
 
 struct MatchHistoryView: View {
-    @EnvironmentObject var state: GlobalState
+    
     @Binding var isShowingProgress: Bool
+    @Binding var allPlayerMatches: [PlayerMatch]
+    
+    let refreshAllPlayerMatches: () -> Void
     
     var body: some View {
         ZStack {
-            if state.playerMatchRepository.allPlayerMatches.isEmpty {
+            if allPlayerMatches.isEmpty {
                 VStack {
                     Spacer()
                     
@@ -23,18 +26,20 @@ struct MatchHistoryView: View {
                 }
                 .opacity(isShowingProgress ? 0 : 1)
             } else {
-                List(state.playerMatchRepository.allPlayerMatches) { playerMatch in
+                List(allPlayerMatches) { playerMatch in
                     MatchRow(playerMatch: playerMatch)
                 }
                 .opacity(isShowingProgress ? 0 : 1)
             }
             ProgressView().opacity(isShowingProgress ? 1 : 0)
         }
-        .task {
-            guard let player = state.playerRepository.player else { return }
-            await state.playerMatchRepository.fetchPlayerMatch(player: player)
+        .refreshable {
+            
+            refreshAllPlayerMatches()
         }
-        
+        .onAppear{
+            refreshAllPlayerMatches()
+        }
     }
 }
 
@@ -66,6 +71,6 @@ struct MatchHistoryView_Previews: PreviewProvider {
     ]
     
     static var previews: some View {
-        MatchHistoryView(isShowingProgress: .constant(false))
+        MatchHistoryView(isShowingProgress: .constant(false), allPlayerMatches: .constant([]), refreshAllPlayerMatches: { })
     }
 }

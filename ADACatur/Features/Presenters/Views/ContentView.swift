@@ -8,12 +8,10 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var state: GlobalState
     
     var body: some View {
         NavigationView {
             LoginScreen()
-                .environmentObject(state)
         }
     }
 }

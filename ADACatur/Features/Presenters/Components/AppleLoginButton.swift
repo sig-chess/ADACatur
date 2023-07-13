@@ -9,12 +9,19 @@ import SwiftUI
 import AuthenticationServices
 
 struct AppleLoginButton: View {
+    
     @Environment(\.colorScheme) var colorScheme
+//
+//    @EnvironmentObject var state: GlobalState
+//
+//    @AppStorage("userID") private var userID: String = ""
+//    @Binding public var isLogin: Bool
     
-    @EnvironmentObject var state: GlobalState
+    var action: (_ result: Result<ASAuthorization, Error>) -> Void
     
-    @AppStorage("userID") private var userID: String = ""
-    @Binding public var isLogin: Bool
+    init(action: @escaping (_ result: Result<ASAuthorization, Error>) -> Void) {
+        self.action = action
+    }
     
     var body: some View {
         SignInWithAppleButton(
@@ -24,47 +31,7 @@ struct AppleLoginButton: View {
                 request.requestedScopes = [.fullName, .email]
             },
             onCompletion: { result in
-                // Handle the result of the sign-in process
-                switch result {
-                case .success(let auth):
-                    print(result)
-                    
-                    // User signed in successfully with Apple ID
-                    // Handle the user data from `authResult.credential`
-                    switch auth.credential {
-                    case let appleIdCredentials as ASAuthorizationAppleIDCredential:
-                        
-                        userID = appleIdCredentials.user
-                        
-                        //                            var player = Player(name: "", email: "")
-                        Task {
-                            await state.playerRepository.fetchUser(appleUserId: userID)
-                        }
-                        //                            print(playerRepository.player)
-                        if state.playerRepository.player != nil {
-                            isLogin = true
-                            print("success login")
-                        }
-                        else {
-                            Task {
-                                state.playerRepository.createPlayerViaAppleID (
-                                    credentials: appleIdCredentials
-                                )
-                                print("saved new user")
-                                isLogin = true
-                            }
-                        }
-                    default:
-                        print(auth.credential)
-                    }
-                    
-                    break
-                    
-                case .failure(_):
-                    // An error occurred during sign-in
-                    // Handle the error
-                    break
-                }
+                action(result)
             }
         )
         .signInWithAppleButtonStyle(
@@ -75,7 +42,7 @@ struct AppleLoginButton: View {
 
 struct AppleLoginButton_Previews: PreviewProvider {
     static var previews: some View {
-        AppleLoginButton(isLogin: .constant(false))
+        AppleLoginButton(action: { result in })
             .environment(\.colorScheme, .dark)
     }
 }

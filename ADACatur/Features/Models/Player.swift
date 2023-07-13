@@ -15,7 +15,6 @@ struct Player: Hashable, Equatable {
     var email: String
     let appleUserId: String?
     var eloScore: Double
-//    let record: CKRecord?
 
     init(recordId: CKRecord.ID? = nil, name: String, email: String, eloScore: Double = 600.0) {
         self.recordId = recordId

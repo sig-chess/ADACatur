@@ -11,80 +11,69 @@ import AuthenticationServices
 
 import SwiftUI
 
-class PlayerRepository: ObservableObject {
+class PlayerRepository {
     private var database: CKDatabase
     private var container: CKContainer
-    
-    @Published var player: Player?
-    @Published var allPlayers: [Player] = []
     
     init(container: CKContainer) {
         self.container = container
         self.database = self.container.publicCloudDatabase
-        Task {
-            await fetchAllUser()
-        }
         
     }
     
-    func createPlayer(name: String, email: String, eloScore: Double) {
-        let record = CKRecord(recordType: RecordType.player.rawValue)
-        let player = Player(name: name, email: email)
+    func createPlayerViaAppleID(credentials: ASAuthorizationAppleIDCredential, completion: @escaping (_ status: Bool, _ error: Error?) -> Void) {
         Task {
-            await save(record: record)
+            do {
+                let record = CKRecord(recordType: RecordType.player.rawValue)
+                let player = Player(credentials: credentials)
+                if player?.name == "" {
+                    completion(true, nil)
+                }
+                else {
+                    record["name"] = player?.name
+                    record["email"] = player?.email
+                    record["eloScore"] = player?.eloScore
+                    record["appleUserId"] = player?.appleUserId
+                    try await save(record: record)
+                    completion(true, nil)
+                }
+                
+               
+            } catch {
+                completion(false, error)
+            }
         }
     }
     
-    func createPlayerViaAppleID(credentials: ASAuthorizationAppleIDCredential) {
-       
-        Task {
-            let record = CKRecord(recordType: RecordType.player.rawValue)
-            let player = Player(credentials: credentials)
-            
-            record["name"] = player?.name
-            record["email"] = player?.email
-            record["eloScore"] = player?.eloScore
-            record["appleUserId"] = player?.appleUserId
-            await save(record: record)
-        }
-        
-    }
-    
-    func fetchUser(appleUserId: String) async {
+    func fetchUser(appleUserId: String) async -> Player? {
         
         let predicate = NSPredicate(format: "appleUserId == %@", appleUserId)
         let query = CKQuery(recordType: RecordType.player.rawValue, predicate: predicate)
         
         do {
             let records = try await database.perform(query, inZoneWith: nil)
-            
             let firstRecord = records.first
-            player = Player(recordId: firstRecord?.recordID, name: firstRecord!["name"] as! String, email: firstRecord!["email"] as! String, eloScore: firstRecord!["eloScore"] as! Double)
+            return Player(recordId: firstRecord?.recordID, name: firstRecord?["name"] as? String ?? "", email: firstRecord?["email"] as? String ?? "", eloScore: firstRecord?["eloScore"] as? Double ?? 600)
         } catch let error {
             print(error)
         }
+        return nil
     }
     
-    func fetchAllUser() async {
+    func fetchAllUser() async -> [Player] {
         let predicate = NSPredicate(value: true)
         let query = CKQuery(recordType: RecordType.player.rawValue, predicate: predicate)
         // TODO: uncomment once we want to sort this
         query.sortDescriptors = [NSSortDescriptor(key: "eloScore", ascending: false)]
         do {
             let records = try await database.perform(query, inZoneWith: nil)
-            let models = records.map { record in
+            return records.map { record in
                 Player(recordId: record.recordID, name: record["name"] as? String ?? "", email: record["email"] as? String ?? "", eloScore: record["eloScore"] as? Double ?? 0.0)
             }
-            DispatchQueue.main.async { [weak self] in
-                self?.allPlayers = models
-            }
-            
-            print(self.allPlayers)
-            
-            print(self.allPlayers)
         } catch let error {
             print(error)
         }
+        return [Player]()
     }
     
     
@@ -93,18 +82,20 @@ class PlayerRepository: ObservableObject {
         do {
             let record1 = try await database.record(for: player.recordId!)
             record1["eloScore"] = eloChange
-            await self.save(record: record1)
+            try await save(record: record1)
         } catch let error {
             print(error)
         }
     }
     
-    func save(record: CKRecord) async {
+    func save(record: CKRecord) async throws {
         do {
-            let newRecord = try await self.database.save(record)
+            try await self.database.save(record)
             print("Success to create record")
         } catch let error {
-            print(error)
+            print("cek")
+            print(error.localizedDescription)
+            throw error
         }
     }
 }
