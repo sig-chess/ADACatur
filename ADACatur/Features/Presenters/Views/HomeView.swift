@@ -12,73 +12,38 @@ enum Tab {
     case matches
 }
 
-private var players: [Player] = [
-    .init(
-        name: "John Lewis",
-        email: "john@gmail.com",
-        eloScore: 85.5
-    ),
-    .init(
-        name: "Catherine",
-        email: "catherine@gmail.com",
-        eloScore: 65.5
-    ),
-    .init(
-        name: "Raymond Lawrence",
-        email: "raymond@gmail.com",
-        eloScore: 35.5
-    ),
-]
-
-private var playerMatches: [PlayerMatch] = [
-    .init(
-        player: players[0],
-        match: .init(startedAt: .now, finishedAt: .now, note: ""),
-        result: .lose,
-        eloChange: 1.0
-    ),
-    .init(
-        player: players[2],
-        match: .init(startedAt: .now, finishedAt: .now, note: ""),
-        result: .draw,
-        eloChange: 0.0
-    ),
-    .init(
-        player: players[1],
-        match: .init(startedAt: .now, finishedAt: .now, note: ""),
-        result: .win,
-        eloChange: 4.0
-    )
-]
-
 struct HomeView: View {
     
-    @Environment(\.cloudKitContainer) var cloudKitContainer
-  
+    @ObservedObject var viewModel: HomeViewModel = HomeViewModel()
+    
     @State private var selectedTab: Tab = .leaderboard
     @State private var showSheet: Bool = false
-    @State private var playerName: String = ""
-    @State private var allPlayers: [Player] = []
-    @State private var currentPlayer: Player?
-  
-    @AppStorage("userID") private var userID: String = ""
     
     var body: some View {
-        VStack {
-            Picker("", selection: $selectedTab) {
-                Text("Leaderboard").tag(Tab.leaderboard)
-                Text("Match Histories").tag(Tab.matches)
-            }.pickerStyle(.segmented)
-            
-            if selectedTab == Tab.leaderboard {
-                LeaderboardView(players: allPlayers)
-            } else {
-                MatchHistoryView(playerMatches: playerMatches)
+        ZStack {
+            VStack {
+                Picker("", selection: $selectedTab) {
+                    Text("Leaderboard").tag(Tab.leaderboard)
+                    Text("Match Histories").tag(Tab.matches)
+                }.pickerStyle(.segmented)
+                
+                if selectedTab == Tab.leaderboard {
+                    LeaderboardView(isShowingProgress: $viewModel.isShowingProgress, allPlayers: $viewModel.allPlayers) {
+                        await self.viewModel.getAllPlayers()
+                    }
+                        
+                } else {
+                    MatchHistoryView(isShowingProgress: $viewModel.isShowingProgressHistory, allPlayerMatches: $viewModel.allPlayerMatches) {
+                        Task {
+                            await self.viewModel.getAllPlayerMatches()
+                        }
+                    }
+                }
             }
         }
-        .navigationTitle(Text("Hi \(playerName)!"))
+        
+        .navigationTitle(Text("Hi \(viewModel.player?.name.components(separatedBy: " ").first ?? "")!"))
         .navigationBarItems(trailing: HStack {
-            //button 1
             Button(action: {
                 showSheet.toggle()
             }) {
@@ -87,34 +52,25 @@ struct HomeView: View {
             }
         })
         .sheet(isPresented: $showSheet) {
-            RecordMatchView(allPlayers: self.allPlayers, currentPlayer: self.currentPlayer)
-        }
-        .onAppear{
-            if let container = cloudKitContainer {
-                
-                let playerRepository = PlayerRepository(container: container)
-                playerRepository.fetchUser(appleUserId: userID) {record in
-                    if let fetchedRecord = record {
-                        playerRepository.player.name = fetchedRecord["name"] as! String
-                        playerRepository.player.email = fetchedRecord["email"] as! String
-                        playerRepository.player.recordId = fetchedRecord.recordID
-                    }
-                }
-                if playerRepository.player.name != "" {
-                    // TODO: flag whether user has already login
-                    // isLogin = true
-                    playerName = String(playerRepository.player.name.split(separator: Character(" "))[0])
-                    self.currentPlayer = playerRepository.player
-                    print("success login")
-                }
-                Task{
-                    try await playerRepository.fetchAllUser()
-                }
-                
-                self.allPlayers = playerRepository.allPlayers
-                print(playerRepository.allPlayers)
+            RecordMatchView(isShowingProgress: viewModel.isShowingProgress, player: viewModel.player, allPlayers: $viewModel.allPlayers) { result, opponent in
+                await viewModel.addRecord(result: result, opponent: opponent)
             }
         }
+//        .onAppear{
+//            Task {
+//                isShowingProgress = true
+//                isShowingProgressHistory = true
+//                await state.playerRepository.fetchUser(appleUserId: userID)
+//                playerName = String(state.playerRepository.player?.name.split(separator: Character(" "))[0] ?? "")
+//                Task{
+//                    await state.playerRepository.fetchAllUser()
+//                    isShowingProgress = false
+//                }
+//                guard let player = self.state.playerRepository.player else { return }
+//                await state.playerMatchRepository.fetchPlayerMatch(player: player)
+//                isShowingProgressHistory = false
+//            }
+//        }
     }
 }
 

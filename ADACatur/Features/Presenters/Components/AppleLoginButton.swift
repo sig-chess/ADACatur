@@ -9,11 +9,19 @@ import SwiftUI
 import AuthenticationServices
 
 struct AppleLoginButton: View {
-    @Environment(\.colorScheme) var colorScheme
-    @Environment(\.cloudKitContainer) var cloudKitContainer
     
-    @AppStorage("userID") private var userID: String = ""
-    @Binding public var isLogin: Bool
+    @Environment(\.colorScheme) var colorScheme
+//
+//    @EnvironmentObject var state: GlobalState
+//
+//    @AppStorage("userID") private var userID: String = ""
+//    @Binding public var isLogin: Bool
+    
+    var action: (_ result: Result<ASAuthorization, Error>) -> Void
+    
+    init(action: @escaping (_ result: Result<ASAuthorization, Error>) -> Void) {
+        self.action = action
+    }
     
     var body: some View {
         SignInWithAppleButton(
@@ -23,58 +31,7 @@ struct AppleLoginButton: View {
                 request.requestedScopes = [.fullName, .email]
             },
             onCompletion: { result in
-                // Handle the result of the sign-in process
-                switch result {
-                case .success(let auth):
-                    print(result)
-                    
-                    // User signed in successfully with Apple ID
-                    // Handle the user data from `authResult.credential`
-                    switch auth.credential {
-                    case let appleIdCredentials as ASAuthorizationAppleIDCredential:
-                        if let container = cloudKitContainer {
-                            let playerRepository = PlayerRepository(container: container)
-                            
-                            userID = appleIdCredentials.user
-                            
-                            //                            var player = Player(name: "", email: "")
-                   
-                            playerRepository.fetchUser(appleUserId: userID) {record in
-                                if let fetchedRecord = record {
-                                    playerRepository.player.name = fetchedRecord["name"] as! String
-                                    playerRepository.player.email = fetchedRecord["email"] as! String
-                                }
-                            }
-//                            print(playerRepository.player)
-                            if playerRepository.player.name != "" {
-                                isLogin = true
-                                print("success login")
-                            }
-                            else {
-                                Task {
-                                    try await playerRepository.createPlayerViaAppleID(
-                                        credentials: appleIdCredentials
-                                    )
-                                    print("saved new user")
-                                    isLogin = true
-                                }
-                            }
-                            
-                            
-                        } else {
-                            print("Missing cloud kit container")
-                        }
-                    default:
-                        print(auth.credential)
-                    }
-                    
-                    break
-                    
-                case .failure(_):
-                    // An error occurred during sign-in
-                    // Handle the error
-                    break
-                }
+                action(result)
             }
         )
         .signInWithAppleButtonStyle(
@@ -85,7 +42,7 @@ struct AppleLoginButton: View {
 
 struct AppleLoginButton_Previews: PreviewProvider {
     static var previews: some View {
-        AppleLoginButton(isLogin: .constant(false))
+        AppleLoginButton(action: { result in })
             .environment(\.colorScheme, .dark)
     }
 }

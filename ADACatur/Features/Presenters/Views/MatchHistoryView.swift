@@ -8,21 +8,37 @@
 import SwiftUI
 
 struct MatchHistoryView: View {
-    public var playerMatches: [PlayerMatch]
+    
+    @Binding var isShowingProgress: Bool
+    @Binding var allPlayerMatches: [PlayerMatch]
+    
+    let refreshAllPlayerMatches: () -> Void
     
     var body: some View {
-        if playerMatches.isEmpty {
-            VStack {
-                Spacer()
-                
-                Text("No Match")
-                
-                Spacer()
+        ZStack {
+            if allPlayerMatches.isEmpty {
+                VStack {
+                    Spacer()
+                    
+                    Text("No Match")
+                    
+                    Spacer()
+                }
+                .opacity(isShowingProgress ? 0 : 1)
+            } else {
+                List(allPlayerMatches) { playerMatch in
+                    MatchRow(playerMatch: playerMatch)
+                }
+                .opacity(isShowingProgress ? 0 : 1)
             }
-        } else {
-            List(playerMatches) { playerMatch in
-                MatchRow(playerMatch: playerMatch)
-            }
+            ProgressView().opacity(isShowingProgress ? 1 : 0)
+        }
+        .refreshable {
+            
+            refreshAllPlayerMatches()
+        }
+        .onAppear{
+            refreshAllPlayerMatches()
         }
     }
 }
@@ -55,6 +71,6 @@ struct MatchHistoryView_Previews: PreviewProvider {
     ]
     
     static var previews: some View {
-        MatchHistoryView(playerMatches: playerMatches)
+        MatchHistoryView(isShowingProgress: .constant(false), allPlayerMatches: .constant([]), refreshAllPlayerMatches: { })
     }
 }

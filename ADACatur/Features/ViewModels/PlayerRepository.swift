@@ -11,109 +11,91 @@ import AuthenticationServices
 
 import SwiftUI
 
-class PlayerRepository: ObservableObject {
+class PlayerRepository {
     private var database: CKDatabase
     private var container: CKContainer
-    
-    @Published var player: Player = Player(name: "", email: "")
-    @Published var allPlayers: [Player] = []
-    
     
     init(container: CKContainer) {
         self.container = container
         self.database = self.container.publicCloudDatabase
-        fetchAllUser()
-    }
-
-    func createPlayer(name: String, email: String, eloScore: Double) {
-        let record = CKRecord(recordType: RecordType.player.rawValue)
-        let player = Player(name: name, email: email)
         
-        save(record: record)
     }
     
-    func createPlayerViaAppleID(credentials: ASAuthorizationAppleIDCredential) {
-        let record = CKRecord(recordType: RecordType.player.rawValue)
-        let player = Player(credentials: credentials)
-        
-        record["name"] = player?.name
-        record["email"] = player?.email
-        record["eloScore"] = player?.eloScore
-        record["appleUserId"] = player?.appleUserId
-        
-        save(record: record)
+    func createPlayerViaAppleID(credentials: ASAuthorizationAppleIDCredential, completion: @escaping (_ status: Bool, _ error: Error?) -> Void) {
+        Task {
+            do {
+                let record = CKRecord(recordType: RecordType.player.rawValue)
+                let player = Player(credentials: credentials)
+                if player?.name == "" {
+                    completion(true, nil)
+                }
+                else {
+                    record["name"] = player?.name
+                    record["email"] = player?.email
+                    record["eloScore"] = player?.eloScore
+                    record["appleUserId"] = player?.appleUserId
+                    try await save(record: record)
+                    completion(true, nil)
+                }
+                
+               
+            } catch {
+                completion(false, error)
+            }
+        }
     }
     
-    func fetchUser(appleUserId: String, completion: @escaping (CKRecord?) -> Void) {
+    func fetchUser(appleUserId: String) async -> Player? {
         
         let predicate = NSPredicate(format: "appleUserId == %@", appleUserId)
         let query = CKQuery(recordType: RecordType.player.rawValue, predicate: predicate)
         
-        
-        let queryOperation = CKQueryOperation(query: query)
-        queryOperation.resultsLimit = 1
-        
-        var fetchedRecord: CKRecord?
-        
-        queryOperation.recordFetchedBlock = { record in
-            // Process the fetched record
-            fetchedRecord = record
+        do {
+            let records = try await database.perform(query, inZoneWith: nil)
+            let firstRecord = records.first
+            return Player(recordId: firstRecord?.recordID, name: firstRecord?["name"] as? String ?? "", email: firstRecord?["email"] as? String ?? "", eloScore: firstRecord?["eloScore"] as? Double ?? 600)
+        } catch let error {
+            print(error)
         }
-        
-        queryOperation.queryCompletionBlock = { (cursor, error) in
-            if let error = error {
-                print("Error fetching record: \(error.localizedDescription)")
-            }
-            
-            completion(fetchedRecord)
-        }
-        
-        let dispatchGroup = DispatchGroup()
-        dispatchGroup.enter()
-        
-        database.add(queryOperation)
-        
-        queryOperation.completionBlock = {
-            dispatchGroup.leave()
-        }
-
-        dispatchGroup.wait()
+        return nil
     }
     
-    func fetchAllUser() {
-        
+    func fetchAllUser() async -> [Player] {
         let predicate = NSPredicate(value: true)
         let query = CKQuery(recordType: RecordType.player.rawValue, predicate: predicate)
         // TODO: uncomment once we want to sort this
-        // query.sortDescriptors = [NSSortDescriptor(key: "eloScore", ascending: true)]
-        
-        database.perform(query, inZoneWith: nil) { (records, error) in
-            if let error = error {
-                print(error)
+        query.sortDescriptors = [NSSortDescriptor(key: "eloScore", ascending: false)]
+        do {
+            let records = try await database.perform(query, inZoneWith: nil)
+            return records.map { record in
+                Player(recordId: record.recordID, name: record["name"] as? String ?? "", email: record["email"] as? String ?? "", eloScore: record["eloScore"] as? Double ?? 0.0)
             }
-            
-            if let records = records {
-                let models = records.map { record in
-                    Player(recordId: record.recordID, name: record["name"] as? String ?? "", email: record["email"] as? String ?? "", eloScore: record["eloScore"] as? Double ?? 0.0)
-                }
-                self.allPlayers = models
-//                print(self.allPlayers)
-            }
-            
+        } catch let error {
+            print(error)
+        }
+        return [Player]()
+    }
+    
+    
+    
+    func updateElo(player: Player, eloChange: Double) async{
+        do {
+            let record1 = try await database.record(for: player.recordId!)
+            record1["eloScore"] = eloChange
+            try await save(record: record1)
+        } catch let error {
+            print(error)
         }
     }
     
-    func addOperation(operation: CKDatabaseOperation) {
-        database.add(operation)
-    }
-    
-    func save(record: CKRecord) {
-        self.database.save(record) { newRecord, error in
-            if let error = error {
-                print(error)
-            } else {
-                print("Success to create record")
-            }
+    func save(record: CKRecord) async throws {
+        do {
+            try await self.database.save(record)
+            print("Success to create record")
+        } catch let error {
+            print("cek")
+            print(error.localizedDescription)
+            throw error
         }
     }
 }

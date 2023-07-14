@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ResultType: String {
+enum ResultType: String, CaseIterable {
     case win = "win"
     case lose = "lose"
     case draw = "draw"
@@ -15,7 +15,6 @@ enum ResultType: String {
 
 struct PlayerMatch: Identifiable {
     var id: UUID = UUID()
-    
     let player: Player
     let match: Match
     let result: ResultType

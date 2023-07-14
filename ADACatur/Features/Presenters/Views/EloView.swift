@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CalculateElo: View {
+struct CalculateEloView: View {
     var playerARating = 800
     var playerBRating = 1000
     var kFactor = 32
@@ -54,8 +54,8 @@ struct CalculateElo: View {
     }
 }
 
-struct CalculateElo_Previews: PreviewProvider {
+struct CalculateEloView_Previews: PreviewProvider {
     static var previews: some View {
-        CalculateElo()
+        CalculateEloView()
     }
 }

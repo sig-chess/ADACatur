@@ -27,6 +27,11 @@
 		B1A18B1F2A2659E20099C5EF /* EloView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A18B1E2A2659E20099C5EF /* EloView.swift */; };
 		B1A18B212A265A8C0099C5EF /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A18B202A265A8C0099C5EF /* LoginScreen.swift */; };
 		B1A18B252A265D1C0099C5EF /* AppleLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A18B242A265D1C0099C5EF /* AppleLoginButton.swift */; };
+		B65CD7952A585017001142B0 /* CalculateElo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65CD7942A585017001142B0 /* CalculateElo.swift */; };
+		B65CD7972A59CEFE001142B0 /* MatchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65CD7962A59CEFE001142B0 /* MatchRepository.swift */; };
+		B65CD7992A59D234001142B0 /* PlayerMatchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65CD7982A59D234001142B0 /* PlayerMatchRepository.swift */; };
+		B691B7BE2A5E95F400099A3D /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B691B7BD2A5E95F400099A3D /* HomeViewModel.swift */; };
+		B691B7C02A5E9A0100099A3D /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B691B7BF2A5E9A0100099A3D /* LoginViewModel.swift */; };
 		B6BEEACC2A3C4DAF007718AB /* RecordMatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BEEACB2A3C4DAF007718AB /* RecordMatchView.swift */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +58,11 @@
 		B1A18B1E2A2659E20099C5EF /* EloView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EloView.swift; sourceTree = "<group>"; };
 		B1A18B202A265A8C0099C5EF /* LoginScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
 		B1A18B242A265D1C0099C5EF /* AppleLoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginButton.swift; sourceTree = "<group>"; };
+		B65CD7942A585017001142B0 /* CalculateElo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculateElo.swift; sourceTree = "<group>"; };
+		B65CD7962A59CEFE001142B0 /* MatchRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchRepository.swift; sourceTree = "<group>"; };
+		B65CD7982A59D234001142B0 /* PlayerMatchRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerMatchRepository.swift; sourceTree = "<group>"; };
+		B691B7BD2A5E95F400099A3D /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		B691B7BF2A5E9A0100099A3D /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		B6BEEACB2A3C4DAF007718AB /* RecordMatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordMatchView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -136,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				2CE3AEF12A2651790022580D /* ExampleUtilities.swift */,
+				B65CD7942A585017001142B0 /* CalculateElo.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -154,6 +165,10 @@
 			isa = PBXGroup;
 			children = (
 				2C0B05922A34CA6100A75D30 /* PlayerRepository.swift */,
+				B65CD7962A59CEFE001142B0 /* MatchRepository.swift */,
+				B65CD7982A59D234001142B0 /* PlayerMatchRepository.swift */,
+				B691B7BD2A5E95F400099A3D /* HomeViewModel.swift */,
+				B691B7BF2A5E9A0100099A3D /* LoginViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -283,18 +298,23 @@
 				2C0B05862A34A50A00A75D30 /* PlayerMatch.swift in Sources */,
 				2CE3AEF22A2651790022580D /* ExampleUtilities.swift in Sources */,
 				B6BEEACC2A3C4DAF007718AB /* RecordMatchView.swift in Sources */,
+				B691B7BE2A5E95F400099A3D /* HomeViewModel.swift in Sources */,
 				2C0B058C2A34B32000A75D30 /* MatchHistoryView.swift in Sources */,
 				B1A18B252A265D1C0099C5EF /* AppleLoginButton.swift in Sources */,
 				2C0B05842A34A4BD00A75D30 /* Match.swift in Sources */,
 				2C0B05802A34A40D00A75D30 /* MatchRow.swift in Sources */,
 				2C0B05902A34BB4700A75D30 /* ContentView.swift in Sources */,
 				2C0B057A2A349D7A00A75D30 /* Player.swift in Sources */,
+				B65CD7952A585017001142B0 /* CalculateElo.swift in Sources */,
+				B65CD7992A59D234001142B0 /* PlayerMatchRepository.swift in Sources */,
 				2C0B058E2A34B8CD00A75D30 /* HomeView.swift in Sources */,
 				2C9075882A2650E1006BE4CA /* ExampleReusableCode.swift in Sources */,
 				B1A18B1F2A2659E20099C5EF /* EloView.swift in Sources */,
 				2C90756B2A2641FE006BE4CA /* ADACaturApp.swift in Sources */,
 				2C0B057E2A34A04900A75D30 /* LeaderboardView.swift in Sources */,
 				2C0B05782A349D5E00A75D30 /* PlayerRow.swift in Sources */,
+				B691B7C02A5E9A0100099A3D /* LoginViewModel.swift in Sources */,
+				B65CD7972A59CEFE001142B0 /* MatchRepository.swift in Sources */,
 				2C9075862A265085006BE4CA /* Constants.swift in Sources */,
 				B1A18B212A265A8C0099C5EF /* LoginScreen.swift in Sources */,
 			);

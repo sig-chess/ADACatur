@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import AuthenticationServices
 
 struct LoginScreen: View {
-    @Environment(\.cloudKitContainer) var cloudKitContainer
-    @State private var isLogin: Bool = false
     
-    @AppStorage("userID") private var userID: String = ""
+    //    @EnvironmentObject var state: GlobalState
+    
+    @ObservedObject var viewModel: LoginViewModel = LoginViewModel()
     
     var body: some View {
         ZStack{
@@ -19,32 +20,31 @@ struct LoginScreen: View {
                 .resizable()
                 .scaledToFill()
                 .edgesIgnoringSafeArea(.all)
-                .opacity(0.8)
+                .opacity(viewModel.isShowingProgress ? 0 : 0.8)
+            
             VStack{
                 Spacer()
-                AppleLoginButton(isLogin: $isLogin)
-                    .frame(width: 345,height: 44)
-            }
-            NavigationLink(destination: HomeView().navigationBarBackButtonHidden(true), isActive: $isLogin) {
-                EmptyView()
-            }
-        }
-        .onAppear{
-            if let container = cloudKitContainer {
-                
-                let playerRepository = PlayerRepository(container: container)
-                playerRepository.fetchUser(appleUserId: userID) {record in
-                    if let fetchedRecord = record {
-                        playerRepository.player.name = fetchedRecord["name"] as! String
-                        playerRepository.player.email = fetchedRecord["email"] as! String
+                AppleLoginButton { result in
+                    switch result {
+                    case .success(let auth):
+                        viewModel.createPlayer(auth: auth)
+                    case .failure(_):
+                        // An error occurred during sign-in
+                        // Handle the error
+                        break
                     }
                 }
-                print(playerRepository.player)
-                if playerRepository.player.name != "" {
-                    isLogin = true
-                    print("success login")
-                }
+                .frame(width: 345,height: 44)
             }
+            .opacity(viewModel.isShowingProgress ? 0 : 1)
+            NavigationLink(destination:
+                            HomeView()
+                .navigationBarBackButtonHidden(true),
+                           isActive: $viewModel.isLogin) {
+                EmptyView()
+            }
+            .opacity(viewModel.isShowingProgress ? 0 : 1)
+            ProgressView().opacity(viewModel.isShowingProgress ? 1 : 0)
         }
         
     }
